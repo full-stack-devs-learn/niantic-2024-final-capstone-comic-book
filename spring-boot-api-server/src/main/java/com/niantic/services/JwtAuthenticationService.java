@@ -65,6 +65,6 @@ public class JwtAuthenticationService implements AuthenticationService
             throw new DuplicateResourceException(registerUserDto.getUsername() + " already exists");
         }
         // create user
-        return userDao.create(new User(0, registerUserDto.getUsername(), registerUserDto.getPassword(), registerUserDto.getRole()));
+        return userDao.create(new User(0, registerUserDto.getUsername(), registerUserDto.getPassword()));
     }
 }
