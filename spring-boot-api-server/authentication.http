@@ -1,0 +1,15 @@
+### POST request to example server
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+"username":"Gregor",
+"password":"password"
+}
+
+### GET request for secure resource - without token
+GET http://localhost:8080/demo
+
+### GET request for secure resource - with token (copy token from login request)
+GET http://localhost:8080/demo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHcmVnb3IiLCJpYXQiOjE3Mjc5NTAzNzMsImV4cCI6MTcyNzk4NjM3M30.nScfhISy6Q3GkCgrT_i9wY2I_cakwLoTE_i0E86SM-s
