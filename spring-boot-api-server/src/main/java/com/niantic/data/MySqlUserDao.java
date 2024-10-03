@@ -128,6 +128,6 @@ public class MySqlUserDao implements UserDao
         String hashedPassword = row.getString("hashed_password");
         String role = row.getString("role");
 
-        return new User(userId, username, hashedPassword, role);
+        return new User(userId, username, hashedPassword);
     }
 }
