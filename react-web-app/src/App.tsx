@@ -21,7 +21,7 @@ function App() {
       </main>
 
       <footer>
-        &copy; Sakila Movies 2024
+        &copy; Comic Circle 2024
       </footer>
 
     </Router>
