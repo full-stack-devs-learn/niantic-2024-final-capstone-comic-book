@@ -6,7 +6,7 @@ import Header from './components/shared/header/Header'
 import Login from './components/authentication/login/Login'
 import Register from './components/authentication/register/Register'
 import { useSelector } from 'react-redux'
-import { RootState } from '@reduxjs/toolkit/query'
+import { RootState } from "./store/store";
 import { useAppDispatch } from './store/hooks'
 import UserHomePage from './components/user-home-page/UserHomePage'
 
