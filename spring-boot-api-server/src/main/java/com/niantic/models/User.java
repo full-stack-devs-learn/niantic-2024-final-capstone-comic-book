@@ -71,23 +71,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", activated=" + activated +
-                ", authorities=" + authorities +
-                '}';
+        return STR."User{id=\{id}, username='\{username}\{'\''}, activated=\{activated}, authorities=\{authorities}\{'}'}";
     }
 
     @JsonIgnore
     public String getRole() {
-        if (authorities.size() > 0) {
-            for (Authority role : authorities) {
-                return role.getName()
-                        .toUpperCase();
-            }
-        }
-
         return "ROLE_USER";
     }
 }
