@@ -1,5 +1,6 @@
 import { useState } from "react";
 import demoService from "../../services/demo-service"
+import "./Home.css"
 
 export default function Home()
 {
@@ -15,16 +16,19 @@ export default function Home()
 
     return (
         <>
-        <h1>
-            Home
-        </h1>
+            <div className="container">
 
-        <button onClick={simpleClickHandler}>Simple Authenticated Demo</button>
+                <h1>
+                    Home
+                </h1>
 
-        <div>
-            {data}
-        </div>
+                <button onClick={simpleClickHandler}>Simple Authenticated Demo</button>
 
+                <div>
+                    {data}
+                </div>
+
+            </div>
         </>
     )
 }
