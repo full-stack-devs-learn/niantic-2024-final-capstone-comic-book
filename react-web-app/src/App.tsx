@@ -5,23 +5,38 @@ import Home from './components/home/Home'
 import Header from './components/shared/header/Header'
 import Login from './components/authentication/login/Login'
 import Register from './components/authentication/register/Register'
+import { useSelector } from 'react-redux'
+import { RootState } from '@reduxjs/toolkit/query'
+import { useAppDispatch } from './store/hooks'
+import UserHomePage from './components/user-home-page/UserHomePage'
 
 function App() {
 
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.authentication);
+
+  // dispatch();
+  
   return (
     <Router>
       <Header />
 
       <main className="container mt-4">
       <Routes>
-        <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+
+        { !isAuthenticated && <Route path='/' element={<Home />} />}
+        { isAuthenticated && <Route path='/' element={<UserHomePage />} />}
+
       </Routes>
       </main>
 
       <footer>
+        <div className='container'>
+
         &copy; Comic Circle 2024
+        </div>
       </footer>
 
     </Router>
