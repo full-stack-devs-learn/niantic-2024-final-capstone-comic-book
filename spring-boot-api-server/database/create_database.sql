@@ -65,8 +65,8 @@ VALUES
 -- Creating the comic_book table
 CREATE TABLE comic_book (
     comic_book_id INT NOT NULL AUTO_INCREMENT,
-    marvel_id INT,
-    title VARCHAR(255),
+    marvel_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
     description TEXT,
     image_url VARCHAR(255),
     details_url VARCHAR(255),
