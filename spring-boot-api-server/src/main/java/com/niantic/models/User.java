@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.util.*;
 
+import static java.lang.StringTemplate.STR;
+
 @Setter
 @Getter
 public class User {
