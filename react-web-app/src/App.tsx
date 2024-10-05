@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from "./store/store";
 import { useAppDispatch } from './store/hooks'
 import UserHomePage from './components/user-home-page/UserHomePage'
+import Explore from './components/explore/Explore'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/explore' element={<Explore />} />
 
         { !isAuthenticated && <Route path='/' element={<Home />} />}
         { isAuthenticated && <Route path='/' element={<UserHomePage />} />}
