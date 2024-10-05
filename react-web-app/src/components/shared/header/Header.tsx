@@ -16,7 +16,7 @@ export default function Header() {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg bg-primary navbar2" data-bs-theme="dark">
+        <nav className="navbar navbar-expand-lg bg-dark navbar2" data-bs-theme="dark">
             <div className="container">
                 <div className="collapse navbar-collapse">
                     <img className="icon" src="https://cdn-icons-png.flaticon.com/512/16177/16177368.png" />
@@ -26,6 +26,13 @@ export default function Header() {
                     <ul className="navbar-nav ms-md-auto">
                         {
                             !isAuthenticated && <>
+                                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                                    <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                                    <hr className="d-lg-none my-2 text-white-50" />
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink className="nav-link" to="/explore">Explore</NavLink>
+                                </li>
                                 <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
                                     <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
                                     <hr className="d-lg-none my-2 text-white-50" />

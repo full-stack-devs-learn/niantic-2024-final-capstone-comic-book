@@ -29,8 +29,6 @@ export default function Search()
 
         const timeStamp= new Date().getTime();
         const hash: string = generateHash(timeStamp);
-        console.log(`public key: ${publicKey}`)
-        console.log(`private key: ${privateKey}`)
         const url = `https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${timeStamp}&nameStartsWith=${characterName}&limit=100`
     
         fetch(url).then(response => response.json()).then(
