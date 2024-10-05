@@ -1,6 +1,5 @@
 import { useState } from "react";
 import demoService from "../../services/demo-service"
-import "./Home.css"
 
 export default function Home()
 {
