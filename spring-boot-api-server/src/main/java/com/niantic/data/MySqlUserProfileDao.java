@@ -33,39 +33,23 @@ public class MySqlUserProfileDao implements UserProfileDao {
     }
 
     @Override
-    public int getProfileId() {
-        String sql = "SELECT profile_id FROM user_profile LIMIT 1";
-        return jdbcTemplate.queryForObject(sql, Integer.class);
+    public UserProfile getUserProfileByUserId(int userId) {
+        String sql = "SELECT * FROM user_profile WHERE user_id = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, userId);
+        if (rowSet.next()) {
+            return mapRow(rowSet);
+        }
+        return null;
     }
 
     @Override
-    public int getUserId() {
-        String sql = "SELECT user_id FROM user_profile LIMIT 1";
-        return jdbcTemplate.queryForObject(sql, Integer.class);
-    }
-
-    @Override
-    public String getUserEmail() {
-        String sql = "SELECT email FROM user_profile LIMIT 1";
-        return jdbcTemplate.queryForObject(sql, String.class);
-    }
-
-    @Override
-    public String getFirstName() {
-        String sql = "SELECT first_name FROM user_profile LIMIT 1";
-        return jdbcTemplate.queryForObject(sql, String.class);
-    }
-
-    @Override
-    public String getLastName() {
-        String sql = "SELECT last_name FROM user_profile LIMIT 1";
-        return jdbcTemplate.queryForObject(sql, String.class);
-    }
-
-    @Override
-    public String getAddress() {
-        String sql = "SELECT address " + "FROM user_profile LIMIT 1";
-        return jdbcTemplate.queryForObject(sql, String.class);
+    public UserProfile getUserProfileByEmail(String email) {
+        String sql = "SELECT * FROM user_profile WHERE email = ?";
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, email);
+        if (rowSet.next()) {
+            return mapRow(rowSet);
+        }
+        return null;
     }
 
     @Override
@@ -76,25 +60,25 @@ public class MySqlUserProfileDao implements UserProfileDao {
     }
 
     @Override
-    public void updateUserProfile(int profileId) {
-        String sql = "UPDATE user_profile SET email = ?, first_name = ?, last_name = ?, address = ? WHERE profile_id = ?";
-        jdbcTemplate.update(sql, profileId);
+    public void updateUserProfile(int userId, UserProfile userProfile) {
+        String sql = "UPDATE user_profile SET email = ?, first_name = ?, last_name = ?, address = ? WHERE user_id = ?";
+        jdbcTemplate.update(sql, userProfile.getEmail(), userProfile.getFirstName(),
+                userProfile.getLastName(), userProfile.getAddress(), userId);
     }
 
     @Override
-    public void deleteUserProfile(int profileId) {
-        String sql = "DELETE FROM user_profile WHERE profile_id = ?";
-        jdbcTemplate.update(sql, profileId);
+    public void deleteUserProfile(int userId) {
+        String sql = "DELETE FROM user_profile WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
     }
 
     private UserProfile mapRow(SqlRowSet rowSet) {
-        int profileId = rowSet.getInt("profile_id");
         int userId = rowSet.getInt("user_id");
         String email = rowSet.getString("email");
         String firstName = rowSet.getString("first_name");
         String lastName = rowSet.getString("last_name");
         String address = rowSet.getString("address");
 
-        return new UserProfile(profileId, userId, email, firstName, lastName, address);
+        return new UserProfile(userId, email, firstName, lastName, address);
     }
 }

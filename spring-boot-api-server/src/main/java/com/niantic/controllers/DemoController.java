@@ -1,6 +1,7 @@
 package com.niantic.controllers;
 
 import com.niantic.data.UserDao;
+import com.niantic.models.ComicBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +28,7 @@ public class DemoController
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> demo()
     {
+//        System.out.println(new ComicBook(1,1,"Title", "", "", "", "", 2000, 10));
         var items = new String[]{"milk","potatoes","cheese"};
         return ResponseEntity.ok(items);
     }
