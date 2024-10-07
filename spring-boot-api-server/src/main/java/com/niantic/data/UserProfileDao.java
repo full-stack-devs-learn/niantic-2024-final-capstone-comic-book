@@ -8,19 +8,13 @@ public interface UserProfileDao {
 
     List<UserProfile> getAllUserProfiles();
 
-    int getUserId();
+    UserProfile getUserProfileByUserId(int userId);
 
-    String getUserEmail();
-
-    String getFirstName();
-
-    String getLastName();
-
-    String getAddress();
+    UserProfile getUserProfileByEmail(String email);
 
     void addUserProfile(UserProfile userProfile);
 
-    void updateUserProfile(int profileId);
+    void updateUserProfile(int userId, UserProfile userProfile);
 
-    void deleteUserProfile(int profileId);
+    void deleteUserProfile(int userId);
 }
