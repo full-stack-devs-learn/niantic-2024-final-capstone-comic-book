@@ -6,7 +6,7 @@ DROP DATABASE IF EXISTS comic_circle;
 
 CREATE DATABASE IF NOT EXISTS comic_circle;
 
-USE comic_circle ;
+USE comic_circle;
 
 # ---------------------------------------------------------------------- #
 # Tables                                                                 #
@@ -91,6 +91,15 @@ CREATE TABLE user_collection (
     FOREIGN KEY (comic_book_id) REFERENCES comic_book(comic_book_id)
 );
 
+-- Inserting data into user_collection table
+INSERT INTO user_collection (user_id, comic_book_id)
+VALUES
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 1),
+    (2, 5);
+    
 -- Creating the user_wishlist table
 CREATE TABLE user_wishlist (
     user_id INT NOT NULL,
