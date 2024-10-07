@@ -47,13 +47,7 @@ public class UserProfile {
 
     @Override
     public String toString() {
-        return "UserProfile{" +
-                ", userId=" + userId +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+        return STR."UserProfile{, userId=\{userId}, email='\{email}', firstName='\{firstName}', lastName='\{lastName}', address='\{address}'}";
     }
 
 }
