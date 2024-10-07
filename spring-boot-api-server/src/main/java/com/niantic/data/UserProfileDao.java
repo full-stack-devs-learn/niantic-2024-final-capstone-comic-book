@@ -8,8 +8,6 @@ public interface UserProfileDao {
 
     List<UserProfile> getAllUserProfiles();
 
-    int getProfileId();
-
     int getUserId();
 
     String getUserEmail();

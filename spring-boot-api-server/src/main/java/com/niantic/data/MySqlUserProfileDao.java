@@ -33,12 +33,6 @@ public class MySqlUserProfileDao implements UserProfileDao {
     }
 
     @Override
-    public int getProfileId() {
-        String sql = "SELECT profile_id FROM user_profile LIMIT 1";
-        return jdbcTemplate.queryForObject(sql, Integer.class);
-    }
-
-    @Override
     public int getUserId() {
         String sql = "SELECT user_id FROM user_profile LIMIT 1";
         return jdbcTemplate.queryForObject(sql, Integer.class);
@@ -76,25 +70,24 @@ public class MySqlUserProfileDao implements UserProfileDao {
     }
 
     @Override
-    public void updateUserProfile(int profileId) {
-        String sql = "UPDATE user_profile SET email = ?, first_name = ?, last_name = ?, address = ? WHERE profile_id = ?";
-        jdbcTemplate.update(sql, profileId);
+    public void updateUserProfile(int userId) {
+        String sql = "UPDATE user_profile SET email = ?, first_name = ?, last_name = ?, address = ? WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
     }
 
     @Override
-    public void deleteUserProfile(int profileId) {
-        String sql = "DELETE FROM user_profile WHERE profile_id = ?";
-        jdbcTemplate.update(sql, profileId);
+    public void deleteUserProfile(int userId) {
+        String sql = "DELETE FROM user_profile WHERE user_id = ?";
+        jdbcTemplate.update(sql, userId);
     }
 
     private UserProfile mapRow(SqlRowSet rowSet) {
-        int profileId = rowSet.getInt("profile_id");
         int userId = rowSet.getInt("user_id");
         String email = rowSet.getString("email");
         String firstName = rowSet.getString("first_name");
         String lastName = rowSet.getString("last_name");
         String address = rowSet.getString("address");
 
-        return new UserProfile(profileId, userId, email, firstName, lastName, address);
+        return new UserProfile(userId, email, firstName, lastName, address);
     }
 }
