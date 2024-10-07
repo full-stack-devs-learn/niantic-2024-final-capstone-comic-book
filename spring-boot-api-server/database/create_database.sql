@@ -94,9 +94,9 @@ CREATE TABLE user_collection (
 -- Inserting data into user_collection table
 INSERT INTO user_collection (user_id, comic_book_id)
 VALUES
-    (1, 1),
     (1, 2),
     (1, 3),
+    (1, 4),
     (2, 1),
     (2, 5);
     
@@ -108,6 +108,15 @@ CREATE TABLE user_wishlist (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (comic_book_id) REFERENCES comic_book(comic_book_id)
 );
+
+-- Inserting data into user_wishlist table
+INSERT INTO user_wishlist (user_id, comic_book_id)
+VALUES
+    (1, 1),
+    (1, 5),
+    (2, 2),
+    (2, 3),
+    (2, 4);
 
 -- Creating the user_trade_collection table
 CREATE TABLE user_trade_collection (
