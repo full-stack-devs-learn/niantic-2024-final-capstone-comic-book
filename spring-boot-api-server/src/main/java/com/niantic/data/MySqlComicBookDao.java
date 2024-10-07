@@ -1,7 +1,6 @@
 package com.niantic.data;
 
 import com.niantic.models.ComicBook;
-import com.niantic.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -111,7 +110,7 @@ public class MySqlComicBookDao implements ComicBookDao {
         String title = row.getString("title");
         String description = row.getString("description");
         String imageUrl = row.getString("image_url");
-        String detailsUrl = row.getString(" details_url");
+        String detailsUrl = row.getString("details_url");
         String bookCondition = row.getString("book_condition");
         int year = row.getInt("published_year");
         int issueNumber = row.getInt("issue_number");
