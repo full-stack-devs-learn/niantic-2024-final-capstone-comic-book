@@ -1,6 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Bangers&display=swap");
+
 .icon
 {
-    max-width:25px;
+    max-width: 50px;
     margin: 0 7px;
 }
 
@@ -12,4 +14,9 @@
 .navbar2
 {
     background-color: #902724 !important;
+}
+
+.comic-circle
+{
+    font-family: "Bangers", system-ui;
 }
