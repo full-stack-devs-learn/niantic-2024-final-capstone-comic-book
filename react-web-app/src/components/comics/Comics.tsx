@@ -1,3 +1,5 @@
+import './Comics.css';
+
 export default function Comics({ data }: any)
 {
     return (

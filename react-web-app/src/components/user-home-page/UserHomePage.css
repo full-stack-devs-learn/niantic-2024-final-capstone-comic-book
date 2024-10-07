@@ -1,0 +1,26 @@
+.discover-container
+{
+    display: flex;
+}
+
+.discover-container > h5
+{
+    text-align: center;
+    margin: auto;
+    font-size: 20px;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.btn-collection
+{
+    margin: 0 auto;
+}
+
+.btn-section
+{
+    padding: 3rem;
+    background: linear-gradient(rgba(71, 0, 87, 0.851), rgba(118, 0, 0, 0.768)),
+    url('https://uswalldecor.com/cdn/shop/products/DI0946.jpg?v=1581094932');
+
+}

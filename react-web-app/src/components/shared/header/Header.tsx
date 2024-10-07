@@ -19,8 +19,8 @@ export default function Header() {
         <nav className="navbar navbar-expand-lg bg-dark navbar2" data-bs-theme="dark">
             <div className="container">
                 <div className="collapse navbar-collapse">
-                    <img className="icon" src="https://cdn-icons-png.flaticon.com/512/16177/16177368.png" />
-                    <Link className="navbar-brand" to="/">Comic Circle</Link>  
+                    <img className="icon" src="/public/logo.png" />
+                    <Link className="navbar-brand comic-circle" to="/">Comic Circle</Link>  
                 </div>
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <ul className="navbar-nav ms-md-auto">

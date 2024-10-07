@@ -18,6 +18,7 @@ function App() {
   // dispatch();
   
   return (
+    <>
     <Router>
       <Header />
 
@@ -33,14 +34,13 @@ function App() {
       </Routes>
       </main>
 
+    </Router>
       <footer>
-        <div className='container'>
-
-        &copy; Comic Circle 2024
+        <div className='cc-footer'>
+          &copy; Comic Circle 2024
         </div>
       </footer>
-
-    </Router>
+    </>
   )
 }
 
