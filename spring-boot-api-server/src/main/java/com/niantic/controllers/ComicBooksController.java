@@ -32,4 +32,12 @@ public class ComicBooksController {
         return ResponseEntity.ok(userCollection);
     }
 
+    @GetMapping("wishlist")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getUserWishlist(Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        List<ComicBook> userCollection = comicBookDao.getUserWishlistByUserId(userId);
+        return ResponseEntity.ok(userCollection);
+    }
+
 }
