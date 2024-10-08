@@ -75,5 +75,13 @@ public class ComicBooksController {
         return ResponseEntity.ok(comicBook);
     }
 
+    @PostMapping("wishlist")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> addComicBookToUserWishlist(@RequestBody ComicBook comicBook, Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        comicBook = comicBookDao.addComicBookToUserWishlist(comicBook, userId);
+        return ResponseEntity.ok(comicBook);
+    }
+
 
 }
