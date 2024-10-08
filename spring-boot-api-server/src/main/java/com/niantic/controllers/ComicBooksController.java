@@ -40,4 +40,12 @@ public class ComicBooksController {
         return ResponseEntity.ok(userCollection);
     }
 
+    @GetMapping("trade-collection")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getUserTradeCollection(Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        List<ComicBook> userCollection = comicBookDao.getUserTradeCollectionByUserId(userId);
+        return ResponseEntity.ok(userCollection);
+    }
+
 }
