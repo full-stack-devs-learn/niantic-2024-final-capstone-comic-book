@@ -56,4 +56,15 @@ public class ComicBooksController {
         return ResponseEntity.ok(tradeComics);
     }
 
+    @GetMapping("{comicBookId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getComicBookById(@PathVariable int comicBookId) {
+        var comicBook = comicBookDao.getComicBookById(comicBookId);
+        // TODO: comicBookDao.getOwnerId(comicBookId) - get comic book owner for books that available for trade
+        // int ownerId = comicBookDao.getOwnerId(comicBookId);
+        // List<ComicBook> ownerWishlist = comicBookDao.getUserWishlistByUserId(ownerId);
+        // TODO: create model for tradeComicBook = comicBook + ownerId + list of comics in the owner wishlist
+        return ResponseEntity.ok(comicBook);
+    }
+
 }

@@ -137,6 +137,18 @@ public class MySqlComicBookDao implements ComicBookDao {
 
     @Override
     public ComicBook getComicBookById(int comicBookId) {
+        String sql = """
+                SELECT * 
+                FROM comic_book
+                WHERE comic_book_id = ?;
+                """;
+
+        var row = jdbcTemplate.queryForRowSet(sql, comicBookId);
+
+        if (row.next()) {
+            return mapRow(row);
+        }
+
         return null;
     }
 
