@@ -36,16 +36,24 @@ public class ComicBooksController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getUserWishlist(Principal principal) {
         int userId = userDao.getIdByUsername(principal.getName());
-        List<ComicBook> userCollection = comicBookDao.getUserWishlistByUserId(userId);
-        return ResponseEntity.ok(userCollection);
+        List<ComicBook> userWishlist = comicBookDao.getUserWishlistByUserId(userId);
+        return ResponseEntity.ok(userWishlist);
     }
 
     @GetMapping("trade-collection")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getUserTradeCollection(Principal principal) {
         int userId = userDao.getIdByUsername(principal.getName());
-        List<ComicBook> userCollection = comicBookDao.getUserTradeCollectionByUserId(userId);
-        return ResponseEntity.ok(userCollection);
+        List<ComicBook> userTradeCollection = comicBookDao.getUserTradeCollectionByUserId(userId);
+        return ResponseEntity.ok(userTradeCollection);
+    }
+
+    @GetMapping("trade-all")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getAllTradeComics(Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        List<ComicBook> tradeComics = comicBookDao.getAllTradeComicBooks();
+        return ResponseEntity.ok(tradeComics);
     }
 
 }
