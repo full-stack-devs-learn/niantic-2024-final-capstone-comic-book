@@ -25,3 +25,9 @@
     padding: 1rem 0;
     width: 100%;
 }
+
+.details-card
+{
+    background-color: black;
+    opacity: 0.88;
+}

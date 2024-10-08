@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SelectedComicBook } from "../../models/SelectedComicBook";
-// import comicBookCollectionService
 
 interface SelectedComicBookState {
     comicBookId: number | null;
