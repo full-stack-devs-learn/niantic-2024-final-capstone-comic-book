@@ -157,14 +157,14 @@ public class MySqlComicBookDao implements ComicBookDao {
 
     private ComicBook addComicBook(ComicBook comicBook) {
         String sql = """
-                INSERT INTO comic_book 
-                  marvel_id
+                INSERT INTO comic_book  
+                 (marvel_id
                 , title
                 , description
                 , image_url
                 , details_url
                 , published_year
-                , issue_number
+                , issue_number)
                 VALUES (?, ?, ?, ?, ?, ?, ?);
                 """;
 
@@ -194,7 +194,7 @@ public class MySqlComicBookDao implements ComicBookDao {
         comicBook = addComicBook(comicBook);
         String sql = """
                 INSERT INTO user_collection
-                user_id, comic_book_id
+                (user_id, comic_book_id)
                 VALUES (?, ?);
                 """;
 
