@@ -53,6 +53,16 @@ public class UserProfileController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/email/{email}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<UserProfile> getUserProfileByEmail(@PathVariable String email, Principal principal) {
+        UserProfile userProfile = userProfileDao.getUserProfileByEmail(email);
+        if (userProfile != null) {
+            return ResponseEntity.ok(userProfile);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createUserProfile(Principal principal, @RequestBody UserProfile userProfile) {
