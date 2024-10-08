@@ -277,7 +277,15 @@ public class MySqlComicBookDao implements ComicBookDao {
     @Override
     @Transactional
     public void deleteComicBookFromUserWishList(int comicBookId, int userId) {
+        String sql = """
+                DELETE FROM user_wishlist
+                WHERE user_id = ?
+                AND comic_book_id = ?;
+                """;
 
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        deleteComicBook(comicBookId);
     }
 
     @Override
