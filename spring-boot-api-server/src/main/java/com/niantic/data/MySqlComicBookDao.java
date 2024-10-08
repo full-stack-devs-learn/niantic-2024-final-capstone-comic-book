@@ -3,10 +3,13 @@ package com.niantic.data;
 import com.niantic.models.ComicBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,9 +155,52 @@ public class MySqlComicBookDao implements ComicBookDao {
         return null;
     }
 
+    private ComicBook addComicBook(ComicBook comicBook) {
+        String sql = """
+                INSERT INTO comic_book  
+                 (marvel_id
+                , title
+                , description
+                , image_url
+                , details_url
+                , published_year
+                , issue_number)
+                VALUES (?, ?, ?, ?, ?, ?, ?);
+                """;
+
+        GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(conn -> {
+
+            PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.setInt(1, comicBook.getMarvelId());
+            preparedStatement.setString(2, comicBook.getTitle());
+            preparedStatement.setString(3, comicBook.getDescription());
+            preparedStatement.setString(4, comicBook.getImageUrl());
+            preparedStatement.setString(5, comicBook.getDetailsUrl());
+            preparedStatement.setInt(6, comicBook.getYear());
+            preparedStatement.setInt(7, comicBook.getIssueNumber());
+
+            return preparedStatement;
+
+        }, generatedKeyHolder);
+
+        int comicBookId = generatedKeyHolder.getKey().intValue();
+        return getComicBookById(comicBookId);
+    }
+
     @Override
     public ComicBook addComicBookToUserCollection(ComicBook comicBook, int userId) {
-        return null;
+        comicBook = addComicBook(comicBook);
+        String sql = """
+                INSERT INTO user_collection
+                (user_id, comic_book_id)
+                VALUES (?, ?);
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBook.getComicBookId());
+
+        return comicBook;
     }
 
     @Override

@@ -67,4 +67,13 @@ public class ComicBooksController {
         return ResponseEntity.ok(comicBook);
     }
 
+    @PostMapping("collection")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> addComicBookToUserCollection(@RequestBody ComicBook comicBook, Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        comicBook = comicBookDao.addComicBookToUserCollection(comicBook, userId);
+        return ResponseEntity.ok(comicBook);
+    }
+
+
 }
