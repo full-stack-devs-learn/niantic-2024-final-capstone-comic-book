@@ -96,8 +96,6 @@ INSERT INTO user_collection (user_id, comic_book_id)
 VALUES
     (1, 2),
     (1, 3),
-    (1, 4),
-    (2, 1),
     (2, 5);
     
 -- Creating the user_wishlist table

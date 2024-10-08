@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -190,8 +191,8 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public ComicBook addComicBookToUserCollection(ComicBook comicBook, int userId) {
-        // start transaction  jdbcTemplate...
         comicBook = addComicBook(comicBook);
         String sql = """
                 INSERT INTO user_collection
@@ -205,6 +206,7 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public ComicBook addComicBookToUserWishlist(ComicBook comicBook, int userId) {
         comicBook = addComicBook(comicBook);
         String sql = """
@@ -219,6 +221,7 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public ComicBook addComicBookToUserTradeCollection(int comicBookId, int userId) {
         ComicBook comicBook = getComicBookById(comicBookId);
         if (comicBook == null) {
@@ -246,21 +249,31 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public void updateComicBookCondition(int comicBookId, String condition) {
+        String sql = """
+                UPDATE comic_book
+                SET  book_condition = ?
+                WHERE comic_book_id = ?;
+                """;
 
+        jdbcTemplate.update(sql, condition, comicBookId);
     }
 
     @Override
+    @Transactional
     public void deleteComicBookFromUserCollection(int comicBookId, int userId) {
 
     }
 
     @Override
+    @Transactional
     public void deleteComicBookFromUserWishList(int comicBookId, int userId) {
 
     }
 
     @Override
+    @Transactional
     public void deleteComicBookFromUserTradeCollection(int comicBookId, int userId) {
 
     }
