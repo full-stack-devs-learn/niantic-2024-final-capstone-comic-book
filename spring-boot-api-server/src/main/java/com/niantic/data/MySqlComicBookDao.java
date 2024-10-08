@@ -251,7 +251,13 @@ public class MySqlComicBookDao implements ComicBookDao {
 
     @Override
     public void updateComicBookCondition(int comicBookId, String condition) {
+        String sql = """
+                UPDATE comic_book
+                SET  book_condition = ?
+                WHERE comic_book_id = ?
+                """;
 
+        jdbcTemplate.update(sql, condition, comicBookId);
     }
 
     @Override
