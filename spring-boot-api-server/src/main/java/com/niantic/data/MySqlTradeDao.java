@@ -105,7 +105,10 @@ public class MySqlTradeDao implements TradeDao {
 
     private boolean isUserA(int tradeId, int userId) {
         String sql = "SELECT user_a_id FROM trade WHERE trade_id = ?";
-        Integer userAId = jdbcTemplate.queryForObject(sql, new Object[]{tradeId}, Integer.class);
-        return userAId != null && userAId == userId;
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, tradeId);
+        if (rowSet.next()) {
+            return rowSet.getInt("user_a_id") == userId;
+        }
+        return false;
     }
 }

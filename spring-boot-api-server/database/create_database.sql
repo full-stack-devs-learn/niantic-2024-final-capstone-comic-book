@@ -149,3 +149,12 @@ CREATE TABLE trade (
     FOREIGN KEY (comic_a_book_id) REFERENCES comic_book(comic_book_id),
     FOREIGN KEY (comic_b_book_id) REFERENCES comic_book(comic_book_id)
 );
+
+-- Correcting the trade table insert values to match existing IDs in users and comic_book
+INSERT INTO trade (user_a_id, user_b_id, comic_a_book_id, comic_b_book_id, trade_status, user_a_received, user_b_received) 
+VALUES 
+(1, 2, 1, 2, 'Pending', FALSE, FALSE),  
+(1, 3, 3, 2, 'Completed', TRUE, TRUE),  
+(2, 4, 4, 5, 'Cancelled', FALSE, FALSE), 
+(3, 5, 1, 3, 'Pending', FALSE, FALSE),  
+(4, 5, 4, 5, 'In Progress', FALSE, FALSE);  
