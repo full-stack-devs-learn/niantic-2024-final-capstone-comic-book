@@ -109,7 +109,30 @@ public class MySqlComicBookDao implements ComicBookDao {
 
     @Override
     public List<ComicBook> getAllTradeComicBooks() {
-        return null;
+        List<ComicBook> comics = new ArrayList<>();
+        String sql = """
+                SELECT
+                      b.comic_book_id
+                    , marvel_id
+                    , title
+                    , description
+                    , image_url
+                    , details_url
+                    , book_condition
+                    , published_year
+                    , issue_number
+                FROM user_trade_collection AS t
+                INNER JOIN comic_book AS b
+                ON t.comic_book_id = b.comic_book_id;
+                """;
+
+        var row = jdbcTemplate.queryForRowSet(sql);
+
+        while (row.next()) {
+            comics.add(mapRow(row));
+        }
+
+        return comics;
     }
 
     @Override
