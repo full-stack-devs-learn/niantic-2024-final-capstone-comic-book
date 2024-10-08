@@ -263,7 +263,15 @@ public class MySqlComicBookDao implements ComicBookDao {
     @Override
     @Transactional
     public void deleteComicBookFromUserCollection(int comicBookId, int userId) {
+        String sql = """
+                DELETE FROM user_collection
+                WHERE user_id = ?
+                AND comic_book_id = ?;
+                """;
 
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        deleteComicBook(comicBookId);
     }
 
     @Override
@@ -276,6 +284,15 @@ public class MySqlComicBookDao implements ComicBookDao {
     @Transactional
     public void deleteComicBookFromUserTradeCollection(int comicBookId, int userId) {
 
+    }
+
+    private void deleteComicBook(int comicBookId) {
+        String sql = """
+                DELETE FROM comic_book
+                WHERE comic_book_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, comicBookId);
     }
 
     private ComicBook mapRow(SqlRowSet row) {
