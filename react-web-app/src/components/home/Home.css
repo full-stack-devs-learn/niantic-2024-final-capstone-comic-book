@@ -15,6 +15,7 @@
 {
     position: absolute;
     width: 45%;
+    filter: drop-shadow(0 0 2rem rgb(55, 0, 111));
 }
 
 .home-container

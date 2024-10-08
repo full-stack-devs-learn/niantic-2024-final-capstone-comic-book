@@ -1,14 +1,15 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from "./store/store";
+import { useAppDispatch } from './store/hooks'
 import Home from './components/home/Home'
 import Header from './components/shared/header/Header'
 import Login from './components/authentication/login/Login'
 import Register from './components/authentication/register/Register'
-import { useSelector } from 'react-redux'
-import { RootState } from "./store/store";
-import { useAppDispatch } from './store/hooks'
 import UserHomePage from './components/user-home-page/UserHomePage'
 import Explore from './components/explore/Explore'
+import Details from './components/details/Details';
 
 function App() {
 
@@ -30,6 +31,8 @@ function App() {
 
         { !isAuthenticated && <Route path='/' element={<Home />} />}
         { isAuthenticated && <Route path='/' element={<UserHomePage />} />}
+        { isAuthenticated && <Route path='/details' element={<Details />} />}
+        {/* { isAuthenticated && <Route path='/collection' element={<UserHomePage />} />} */}
 
       </Routes>
       </main>
