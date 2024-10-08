@@ -83,5 +83,13 @@ public class ComicBooksController {
         return ResponseEntity.ok(comicBook);
     }
 
+    @PostMapping("trade-collection/{comicBookId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> addComicBookToUserTradeCollection(@PathVariable int comicBookId, Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        ComicBook comicBook = comicBookDao.addComicBookToUserTradeCollection(comicBookId, userId);
+        return ResponseEntity.ok(comicBook);
+    }
+
 
 }
