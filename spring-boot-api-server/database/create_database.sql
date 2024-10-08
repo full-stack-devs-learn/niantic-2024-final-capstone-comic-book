@@ -127,6 +127,12 @@ CREATE TABLE user_trade_collection (
     FOREIGN KEY (comic_book_id) REFERENCES comic_book(comic_book_id)
 );
 
+-- Inserting data into user_trade_collection table
+INSERT INTO user_trade_collection (user_id, comic_book_id)
+VALUES
+    (1, 4),
+	(2, 1);
+
 -- Creating the trade table
 CREATE TABLE trade (
     trade_id INT NOT NULL AUTO_INCREMENT,
