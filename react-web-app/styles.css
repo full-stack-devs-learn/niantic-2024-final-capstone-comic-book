@@ -2,3 +2,12 @@
     /* Guide lines only for styling. Remove once project is complete */
     border: cyan 0.1px dashed;
 }
+
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url('/public/background.jpg');
+    background-size: cover;
+    position: relative;
+    background-blend-mode:normal;
+}
+

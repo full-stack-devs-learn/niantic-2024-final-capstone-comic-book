@@ -1,0 +1,33 @@
+.section-container
+{
+    display: flex;
+    padding: 3rem;
+    margin-top: 2rem;
+}
+
+.content-container
+{
+    display: flex;
+}
+
+.img
+{
+    max-width: 350px;
+}
+
+.details-container
+{
+    padding: 2rem;
+}
+
+.collection
+{
+    padding: 1rem 0;
+    width: 100%;
+}
+
+.details-card
+{
+    background-color: black;
+    opacity: 0.88;
+}

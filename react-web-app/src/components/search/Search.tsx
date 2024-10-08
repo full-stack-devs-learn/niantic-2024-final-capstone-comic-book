@@ -1,8 +1,4 @@
-import { useDispatch } from 'react-redux'
 import './Search.css'
-import { AppDispatch } from '../../store/store'
-import { useSelector } from 'react-redux'
-import { RootState } from "../../store/store";
 import { useState } from 'react';
 import Characters from '../characters/Characters';
 import Comics from '../comics/Comics';
@@ -69,16 +65,18 @@ export default function Search()
 
 
     return (
-        <>
-            <form className=" search mb-3" onSubmit={handleSubmit}>
-                <div className="input-group">
-                <input className="form-control" type="search"
-                placeholder="Enter Character Name" onChange={handleChange}/>
-                <button className="btn btn-secondary" type="submit">Search</button>
+        <div>
+            <div className="container discover-container">
+                <h5 className="discover">Discover comic books</h5>
+            </div>
+            <form className="search mb-3" onSubmit={handleSubmit}>
+                <div className="input-group search-container">
+                    <input className="form-control" type="search"
+                    placeholder="Enter Character Name" onChange={handleChange}/>
+                    <button className="btn btn-info" type="submit">Search</button>
                 </div>
-                <div className="container">
-
-                <button type="reset" className='reset' onClick={handleReset}>Reset</button>
+                <div className="container reset-container">
+                    <button type="reset" className='reset btn btn-danger btn-sm' onClick={handleReset}>Reset</button>
                 </div>
             </form>
 
@@ -90,12 +88,6 @@ export default function Search()
             {
                 comicData && comicData['results'][0] && <Comics data={comicData['results']} />
             }
-
-            {
-                comicData && comicData['results'][0] && (
-                    <Comics data={comicData['results']}/>
-                )
-            }
-        </>
+        </div>
     )
 }

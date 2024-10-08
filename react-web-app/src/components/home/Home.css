@@ -1,0 +1,24 @@
+.title, .subtitle, .create-btn, .img-container
+{
+    display: flex;
+    justify-content: center;
+}
+
+.title
+{
+    position: relative;
+    margin-top: 32%;
+    text-shadow: 5px 5px #0e000ff4;
+}
+
+.spidey
+{
+    position: absolute;
+    width: 45%;
+    filter: drop-shadow(0 0 2rem rgb(55, 0, 111));
+}
+
+.home-container
+{
+    margin-top: 5%
+}

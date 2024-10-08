@@ -2,3 +2,15 @@
 {
     max-width: 50%;
 }
+
+.search-container
+{
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.reset-container
+{
+    display: flex;
+    justify-content: center;
+}
