@@ -99,4 +99,12 @@ public class ComicBooksController {
         return ResponseEntity.ok(comicBook);
     }
 
+    @DeleteMapping("collection/{comicBookId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> updateComicBookCondition(@PathVariable int comicBookId, Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        comicBookDao.deleteComicBookFromUserCollection(comicBookId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
 }
