@@ -91,5 +91,12 @@ public class ComicBooksController {
         return ResponseEntity.ok(comicBook);
     }
 
+    @PutMapping("{comicBookId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> updateComicBookCondition(@PathVariable int comicBookId, @RequestBody ComicBook book) {
+        comicBookDao.updateComicBookCondition(comicBookId, book.getBookCondition());
+        ComicBook comicBook = comicBookDao.getComicBookById(comicBookId);
+        return ResponseEntity.ok(comicBook);
+    }
 
 }

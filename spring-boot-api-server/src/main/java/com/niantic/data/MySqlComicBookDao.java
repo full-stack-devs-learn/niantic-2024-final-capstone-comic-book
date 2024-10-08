@@ -193,7 +193,6 @@ public class MySqlComicBookDao implements ComicBookDao {
     @Override
     @Transactional
     public ComicBook addComicBookToUserCollection(ComicBook comicBook, int userId) {
-        // start transaction  jdbcTemplate...
         comicBook = addComicBook(comicBook);
         String sql = """
                 INSERT INTO user_collection
@@ -250,21 +249,31 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public void updateComicBookCondition(int comicBookId, String condition) {
+        String sql = """
+                UPDATE comic_book
+                SET  book_condition = ?
+                WHERE comic_book_id = ?;
+                """;
 
+        jdbcTemplate.update(sql, condition, comicBookId);
     }
 
     @Override
+    @Transactional
     public void deleteComicBookFromUserCollection(int comicBookId, int userId) {
 
     }
 
     @Override
+    @Transactional
     public void deleteComicBookFromUserWishList(int comicBookId, int userId) {
 
     }
 
     @Override
+    @Transactional
     public void deleteComicBookFromUserTradeCollection(int comicBookId, int userId) {
 
     }
