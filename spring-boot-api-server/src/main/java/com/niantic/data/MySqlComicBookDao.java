@@ -140,7 +140,7 @@ public class MySqlComicBookDao implements ComicBookDao {
         String sql = """
                 SELECT * 
                 FROM comic_book
-                WHERE comic_book_id = ?";
+                WHERE comic_book_id = ?;
                 """;
 
         var row = jdbcTemplate.queryForRowSet(sql, comicBookId);
