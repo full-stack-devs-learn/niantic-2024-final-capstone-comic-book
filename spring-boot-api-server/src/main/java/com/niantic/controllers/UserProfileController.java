@@ -4,7 +4,6 @@ import com.niantic.data.UserProfileDao;
 import com.niantic.models.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -12,6 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/user-profile")
 public class UserProfileController {
 
     private final UserProfileDao userProfileDao;
@@ -21,13 +21,7 @@ public class UserProfileController {
         this.userProfileDao = userProfileDao;
     }
 
-    @GetMapping("/user-profiles/public")
-    public ResponseEntity<?> publicEndpoint() {
-        return ResponseEntity.ok("This is a public endpoint accessible by anyone.");
-    }
-
-    @GetMapping("/user-profiles/my-profile")
-    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/my-profile")
     public ResponseEntity<?> getMyProfile(Principal principal) {
         UserProfile userProfile = userProfileDao.getUserProfileByEmail(principal.getName());
         if (userProfile != null) {
@@ -36,15 +30,13 @@ public class UserProfileController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/user-profiles")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping
     public ResponseEntity<List<UserProfile>> getAllUserProfiles() {
         List<UserProfile> profiles = userProfileDao.getAllUserProfiles();
         return ResponseEntity.ok(profiles);
     }
 
-    @GetMapping("/user-profiles/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or principal.id == #userId")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserProfile> getUserProfileById(@PathVariable int userId) {
         UserProfile profile = userProfileDao.getUserProfileByUserId(userId);
         if (profile != null) {
@@ -54,15 +46,13 @@ public class UserProfileController {
         }
     }
 
-    @PostMapping("/user-profiles")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping
     public ResponseEntity<?> createUserProfile(@RequestBody UserProfile userProfile) {
         userProfileDao.addUserProfile(userProfile);
         return ResponseEntity.ok("User profile created successfully.");
     }
 
-    @PutMapping("/user-profiles/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or principal.id == #userId")
+    @PutMapping("/{userId}")
     public ResponseEntity<?> updateUserProfile(@PathVariable int userId, @RequestBody UserProfile userProfile) {
         UserProfile existingProfile = userProfileDao.getUserProfileByUserId(userId);
         if (existingProfile != null) {
@@ -72,9 +62,8 @@ public class UserProfileController {
             return ResponseEntity.notFound().build();
         }
     }
-    
-    @DeleteMapping("/user-profiles/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUserProfile(@PathVariable int userId) {
         UserProfile existingProfile = userProfileDao.getUserProfileByUserId(userId);
         if (existingProfile != null) {
