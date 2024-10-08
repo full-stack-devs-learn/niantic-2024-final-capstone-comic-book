@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -190,6 +191,7 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public ComicBook addComicBookToUserCollection(ComicBook comicBook, int userId) {
         // start transaction  jdbcTemplate...
         comicBook = addComicBook(comicBook);
@@ -205,6 +207,7 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public ComicBook addComicBookToUserWishlist(ComicBook comicBook, int userId) {
         comicBook = addComicBook(comicBook);
         String sql = """
@@ -219,6 +222,7 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public ComicBook addComicBookToUserTradeCollection(int comicBookId, int userId) {
         ComicBook comicBook = getComicBookById(comicBookId);
         if (comicBook == null) {
