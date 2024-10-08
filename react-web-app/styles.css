@@ -1,11 +1,11 @@
 * {
     /* Guide lines only for styling. Remove once project is complete */
-    /* border: cyan 0.1px dashed; */
+    border: cyan 0.1px dashed;
 }
 
 body {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('https://img.freepik.com/free-photo/fantasy-style-galaxy-background_23-2151114323.jpg?t=st=1728110101~exp=1728113701~hmac=a53341104804207d99452d46c6c14bdfe19004b3b48c25a3625e79f68bb48072&w=2000');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url('/public/background.jpg');
     background-size: cover;
     position: relative;
     background-blend-mode:normal;

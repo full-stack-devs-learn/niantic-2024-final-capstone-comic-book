@@ -67,7 +67,9 @@ export default function Header() {
                                     <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
                                     <hr className="d-lg-none my-2 text-white-50" />
                                 </li>
-                                <li className="nav-item"><p className="nav-link">Hi {user?.username}!</p> </li>
+                                <li className="nav-item">
+                                    <button className="nav-link">Hi {user?.username}!</button>
+                                </li>
                                 <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
                                     <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
                                     <hr className="d-lg-none my-2 text-white-50" />

@@ -1,10 +1,11 @@
 import './Comics.css';
 
-export default function Comics({ data }: any)
+export default function Comics({ data, onClick }: any)
 {
     return (
         <div className="comics">
-            {data.map((comic: any) => {
+            {
+                data.map((comic: any) => {
                 const detailsUrl = comic.urls.find(
                     (element: any) => element["type"] === "detail"
                 ).url
@@ -17,6 +18,8 @@ export default function Comics({ data }: any)
                             background: `url(${comic.thumbnail.path}.${comic.thumbnail.extension}) no-repeat center`,
                             backgroundSize: "cover",
                         }}
+                        // if user is logged out, display marvel detailsUrl
+                        // if user is logged in display comic details page
                         href={detailsUrl}
                         target="_blank"
                         rel="noreferrer"
