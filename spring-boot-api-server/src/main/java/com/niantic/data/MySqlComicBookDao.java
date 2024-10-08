@@ -191,6 +191,7 @@ public class MySqlComicBookDao implements ComicBookDao {
 
     @Override
     public ComicBook addComicBookToUserCollection(ComicBook comicBook, int userId) {
+        // start transaction  jdbcTemplate...
         comicBook = addComicBook(comicBook);
         String sql = """
                 INSERT INTO user_collection
@@ -205,12 +206,43 @@ public class MySqlComicBookDao implements ComicBookDao {
 
     @Override
     public ComicBook addComicBookToUserWishlist(ComicBook comicBook, int userId) {
-        return null;
+        comicBook = addComicBook(comicBook);
+        String sql = """
+                INSERT INTO user_wishlist
+                (user_id, comic_book_id)
+                VALUES (?, ?);
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBook.getComicBookId());
+
+        return comicBook;
     }
 
     @Override
-    public ComicBook addComicBookToUserTradeCollection(ComicBook comicBook, int userId) {
-        return null;
+    public ComicBook addComicBookToUserTradeCollection(int comicBookId, int userId) {
+        ComicBook comicBook = getComicBookById(comicBookId);
+        if (comicBook == null) {
+            return null;
+        }
+
+        String sql = """
+                INSERT INTO user_trade_collection
+                (user_id, comic_book_id)
+                VALUES (?, ?);
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        // remove record from user_collection
+        sql = """
+                DELETE FROM user_collection
+                WHERE user_id = ?
+                AND comic_book_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        return comicBook;
     }
 
     @Override

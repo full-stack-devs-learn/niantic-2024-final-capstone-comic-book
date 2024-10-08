@@ -19,7 +19,7 @@ public interface ComicBookDao {
 
     ComicBook addComicBookToUserWishlist(ComicBook comicBook, int userId);
 
-    ComicBook addComicBookToUserTradeCollection(ComicBook comicBook, int userId);
+    ComicBook addComicBookToUserTradeCollection(int comicBookId, int userId);
 
     void updateComicBookCondition(int comicBookId, String condition);
 
