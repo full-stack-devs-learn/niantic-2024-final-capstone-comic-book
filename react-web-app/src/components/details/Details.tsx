@@ -3,7 +3,7 @@ import './Details.css'
 export default function Details()
 {
     return (
-        <div className="card text-white bg-secondary mb-3 section-container">
+        <div className="card details-card text-white mb-3 section-container">
             <div className='content-container'>
                 <img className='img' src='https://cdn.marvel.com/u/prod/marvel/i/mg/3/00/66c721c18211f/clean.jpg'/>
                 <div className='details-container'>
