@@ -1,5 +1,6 @@
 package com.niantic.controllers;
 
+import com.niantic.data.UserDao;
 import com.niantic.data.UserProfileDao;
 import com.niantic.models.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,76 +13,90 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/user-profile")
 public class UserProfileController {
 
     private final UserProfileDao userProfileDao;
+    private final UserDao userDao;
 
     @Autowired
-    public UserProfileController(UserProfileDao userProfileDao) {
+    public UserProfileController(UserProfileDao userProfileDao, UserDao userDao) {
         this.userProfileDao = userProfileDao;
+        this.userDao = userDao;
     }
-
-    @GetMapping("/user-profiles/public")
-    public ResponseEntity<?> publicEndpoint() {
-        return ResponseEntity.ok("This is a public endpoint accessible by anyone.");
-    }
-
-    @GetMapping("/user-profiles/my-profile")
+    
+    @GetMapping("/my-profile")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getMyProfile(Principal principal) {
-        UserProfile userProfile = userProfileDao.getUserProfileByEmail(principal.getName());
+        int userId = userDao.getIdByUsername(principal.getName());
+        UserProfile userProfile = userProfileDao.getUserProfileByUserId(userId);
         if (userProfile != null) {
             return ResponseEntity.ok(userProfile);
         }
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/user-profiles")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<UserProfile>> getAllUserProfiles() {
         List<UserProfile> profiles = userProfileDao.getAllUserProfiles();
         return ResponseEntity.ok(profiles);
     }
 
-    @GetMapping("/user-profiles/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or principal.id == #userId")
+    @GetMapping("/{userId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserProfile> getUserProfileById(@PathVariable int userId) {
         UserProfile profile = userProfileDao.getUserProfileByUserId(userId);
         if (profile != null) {
             return ResponseEntity.ok(profile);
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/user-profiles")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> createUserProfile(@RequestBody UserProfile userProfile) {
-        userProfileDao.addUserProfile(userProfile);
-        return ResponseEntity.ok("User profile created successfully.");
+    @GetMapping("/email/{email}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<UserProfile> getUserProfileByEmail(@PathVariable String email, Principal principal) {
+        UserProfile userProfile = userProfileDao.getUserProfileByEmail(email);
+        if (userProfile != null) {
+            return ResponseEntity.ok(userProfile);
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/user-profiles/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or principal.id == #userId")
-    public ResponseEntity<?> updateUserProfile(@PathVariable int userId, @RequestBody UserProfile userProfile) {
+    @PostMapping
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> createUserProfile(Principal principal, @RequestBody UserProfile userProfile) {
+        int userId = userDao.getIdByUsername(principal.getName());
+
+        if (userProfileDao.getUserProfileByUserId(userId) == null) {
+            userProfile.setUserId(userId);
+            userProfileDao.addUserProfile(userProfile);
+            return ResponseEntity.ok("User profile created successfully.");
+        }
+        return ResponseEntity.badRequest().body("Profile for this user already exists.");
+    }
+
+    @PutMapping("/my-profile")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> updateMyProfile(Principal principal, @RequestBody UserProfile updatedProfile) {
+        int userId = userDao.getIdByUsername(principal.getName());
+
         UserProfile existingProfile = userProfileDao.getUserProfileByUserId(userId);
         if (existingProfile != null) {
-            userProfileDao.updateUserProfile(userId, userProfile);
+            userProfileDao.updateUserProfile(userId, updatedProfile);
             return ResponseEntity.ok("User profile updated successfully.");
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
-    
-    @DeleteMapping("/user-profiles/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    @DeleteMapping("/{userId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteUserProfile(@PathVariable int userId) {
         UserProfile existingProfile = userProfileDao.getUserProfileByUserId(userId);
         if (existingProfile != null) {
             userProfileDao.deleteUserProfile(userId);
             return ResponseEntity.ok("User profile deleted successfully.");
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 }

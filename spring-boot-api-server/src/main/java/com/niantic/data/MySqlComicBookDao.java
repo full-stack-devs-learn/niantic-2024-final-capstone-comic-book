@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -190,6 +191,7 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public ComicBook addComicBookToUserCollection(ComicBook comicBook, int userId) {
         comicBook = addComicBook(comicBook);
         String sql = """
@@ -204,32 +206,123 @@ public class MySqlComicBookDao implements ComicBookDao {
     }
 
     @Override
+    @Transactional
     public ComicBook addComicBookToUserWishlist(ComicBook comicBook, int userId) {
-        return null;
+        comicBook = addComicBook(comicBook);
+        String sql = """
+                INSERT INTO user_wishlist
+                (user_id, comic_book_id)
+                VALUES (?, ?);
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBook.getComicBookId());
+
+        return comicBook;
     }
 
     @Override
-    public ComicBook addComicBookToUserTradeCollection(ComicBook comicBook, int userId) {
-        return null;
+    @Transactional
+    public ComicBook addComicBookToUserTradeCollection(int comicBookId, int userId) {
+        ComicBook comicBook = getComicBookById(comicBookId);
+        if (comicBook == null) {
+            return null;
+        }
+
+        String sql = """
+                INSERT INTO user_trade_collection
+                (user_id, comic_book_id)
+                VALUES (?, ?);
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        // remove record from user_collection
+        sql = """
+                DELETE FROM user_collection
+                WHERE user_id = ?
+                AND comic_book_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        return comicBook;
     }
 
     @Override
+    @Transactional
     public void updateComicBookCondition(int comicBookId, String condition) {
+        String sql = """
+                UPDATE comic_book
+                SET  book_condition = ?
+                WHERE comic_book_id = ?;
+                """;
 
+        jdbcTemplate.update(sql, condition, comicBookId);
     }
 
     @Override
+    @Transactional
     public void deleteComicBookFromUserCollection(int comicBookId, int userId) {
+        String sql = """
+                DELETE FROM user_collection
+                WHERE user_id = ?
+                AND comic_book_id = ?;
+                """;
 
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        deleteComicBook(comicBookId);
     }
 
     @Override
+    @Transactional
     public void deleteComicBookFromUserWishList(int comicBookId, int userId) {
+        String sql = """
+                DELETE FROM user_wishlist
+                WHERE user_id = ?
+                AND comic_book_id = ?;
+                """;
 
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        deleteComicBook(comicBookId);
     }
 
     @Override
-    public void deleteComicBookFromUserTradeCollection(int comicBookId, int userId) {
+    @Transactional
+    public ComicBook deleteComicBookFromUserTradeCollection(int comicBookId, int userId) {
+        ComicBook comicBook = getComicBookById(comicBookId);
+        if (comicBook == null) {
+            return null;
+        }
+
+        // remove from trade collection and move back to the user's collection
+        String sql = """
+                DELETE FROM user_trade_collection
+                WHERE user_id = ?
+                AND comic_book_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        sql = """
+                INSERT INTO user_collection
+                (user_id, comic_book_id)
+                VALUES (?, ?);
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        return comicBook;
+    }
+
+    private void deleteComicBook(int comicBookId) {
+        String sql = """
+                DELETE FROM comic_book
+                WHERE comic_book_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, comicBookId);
 
     }
 
