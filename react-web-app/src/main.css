@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Bangers';
+    src: url('/fonts/Bangers-Regular.ttf');
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Bangers';
+    letter-spacing: 0.17rem;
+    margin: 0;
+}
+
