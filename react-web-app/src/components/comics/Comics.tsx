@@ -2,25 +2,33 @@ import './Comics.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { Link } from 'react-router-dom';
-import { setComicBookId } from '../../store/features/comic-details-slice';
+import { setComicBookDetail } from '../../store/features/comic-details-slice';
+// import { comicBookDe }
 
 
 export default function Comics({ data, onClick }: any)
 {
     const dispatch = useDispatch<AppDispatch>();
-    // const {comicBookId} = useSelector((state: RootState) => state.comicBookId);
+    let { comicBookDetail } = useSelector((state: RootState) => state.comicBookDetail);
 
+    // comicBookDetail = {
+    //     comicId: null,
+    //     marvelId: 0,
+    //     title: '',
+    //     description: '',
+    //     imageUrl: '',
+    //     isInCollection: false,
+    //     isInWishlist: false,
+    // }
 
     return (
         <div className="comics">
             {
                 data.map((comic: any) => {
-                // const detailsUrl = comic.urls.find(
-                //     (element: any) => element["type"] === "detail"
-                // ).url
+                const detailsUrl = `/${comic.id}`
 
                 return (
-                    <Link to={`/${comic.id}`}>
+                    <Link to={detailsUrl}>
                     <a
                         key={comic.id}
                         className="comicCard"
@@ -28,9 +36,8 @@ export default function Comics({ data, onClick }: any)
                             background: `url(${comic.thumbnail.path}.${comic.thumbnail.extension}) no-repeat center`,
                             backgroundSize: "cover",
                         }}
-                        // if user is logged out, display marvel details only
-                        // if user is logged in, display add to collection and wishlist buttons
-                        onClick={() => dispatch(setComicBookId(`${comic.id}`))}
+                        // onClick={() => dispatch(setComicBookDetail(comicBookDetail))}
+                        onClick={() => onClick(comic.id)}
                         target="_blank"
                         rel="noreferrer"
                     >
@@ -44,37 +51,31 @@ export default function Comics({ data, onClick }: any)
     )
 }
 
-//WORKING CODE:
+// WORKING CODE:
+// return (
+//     <div className="comics">
+//         {
+//             data.map((comic: any) => {
+//             const detailsUrl = `/${comic.id}`
 
-// export default function Comics({ data, onClick }: any)
-// {
-//     return (
-//         <div className="comics">
-//             {
-//                 data.map((comic: any) => {
-//                 const detailsUrl = comic.urls.find(
-//                     (element: any) => element["type"] === "detail"
-//                 ).url
-
-//                 return (
-//                     <a
-//                         key={comic.id}
-//                         className="comicCard"
-//                         style={{
-//                             background: `url(${comic.thumbnail.path}.${comic.thumbnail.extension}) no-repeat center`,
-//                             backgroundSize: "cover",
-//                         }}
-//                         // if user is logged out, display marvel details only
-//                         // if user is logged in, display add to collection and wishlist buttons
-//                         href={detailsUrl}
-//                         target="_blank"
-//                         rel="noreferrer"
-//                     >
-//                         <div className="caption">{comic.title}</div>
-//                         <div className="caption bottom">View Comic Details</div>
-//                     </a>
-//                 )
-//             })}
-//         </div>
-//     )
-// }
+//             return (
+//                 <Link to={detailsUrl}>
+//                 <a
+//                     key={comic.id}
+//                     className="comicCard"
+//                     style={{
+//                         background: `url(${comic.thumbnail.path}.${comic.thumbnail.extension}) no-repeat center`,
+//                         backgroundSize: "cover",
+//                     }}
+//                     onClick={() => dispatch(setComicBookId(`${comic.id}`))}
+//                     target="_blank"
+//                     rel="noreferrer"
+//                 >
+//                     <div className="caption">{comic.title}</div>
+//                     <div className="caption bottom">View Comic Details</div>
+//                 </a>
+//                 </Link>
+//             )
+//         })}
+//     </div>
+// )

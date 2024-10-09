@@ -16,9 +16,6 @@ function App() {
 
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useSelector((state: RootState) => state.authentication);
-  const { comicBookId } = useSelector((state: RootState) => state.comicBookId);
-
-  // dispatch();
   
   return (
     <>
