@@ -3,6 +3,21 @@
     src: url('/fonts/Bangers-Regular.ttf');
 }
 
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url('/images/background.jpg');
+    background-size: cover;
+    position: relative;
+    background-blend-mode:normal;
+}
+
+
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 h1,
 h2,
 h3,
