@@ -76,9 +76,9 @@ export default function Header() {
                                             {user?.username}
                                     </button>
                                     <div className="dropdown-menu" data-bs-popper="static">
-                                        <NavLink className="nav-link" to='/profile'><a className="dropdown-item" href="#">Profile</a></NavLink>
+                                        <NavLink className="nav-link dropdown-item" to='/profile'>Profile</NavLink>
                                         <div className="dropdown-divider"></div>
-                                        <NavLink className="nav-link" to='' onClick={handleLogout}><a className="dropdown-item">Logout</a></NavLink>
+                                        <NavLink className="nav-link dropdown-item" to='' onClick={handleLogout}>Logout</NavLink>
                                     </div>
                                 </li>
                                 <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
