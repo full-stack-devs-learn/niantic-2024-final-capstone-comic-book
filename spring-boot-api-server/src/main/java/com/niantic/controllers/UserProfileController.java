@@ -25,9 +25,9 @@ public class UserProfileController {
         this.userDao = userDao;
     }
     
-    @GetMapping("/my-profile")
+    @GetMapping("/current-profile")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> getMyProfile(Principal principal) {
+    public ResponseEntity<?> getCurrentProfile(Principal principal) {
         int userId = userDao.getIdByUsername(principal.getName());
         UserProfile userProfile = userProfileDao.getUserProfileByUserId(userId);
         if (userProfile != null) {
@@ -65,7 +65,7 @@ public class UserProfileController {
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> createUserProfile(Principal principal, @RequestBody UserProfile userProfile) {
+    public ResponseEntity<?> addUserProfile(Principal principal, @RequestBody UserProfile userProfile) {
         int userId = userDao.getIdByUsername(principal.getName());
 
         if (userProfileDao.getUserProfileByUserId(userId) == null) {

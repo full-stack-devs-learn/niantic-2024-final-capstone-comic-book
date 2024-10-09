@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -46,6 +47,7 @@ public class MySqlTradeDao implements TradeDao {
     }
 
     @Override
+    @Transactional
     public Trade addTrade(Trade trade) {
         String sql = "INSERT INTO trade (user_a_id, user_b_id, comic_a_book_id, comic_b_book_id, trade_status, user_a_received, user_b_received) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -68,23 +70,28 @@ public class MySqlTradeDao implements TradeDao {
     }
 
     @Override
+    @Transactional
     public void updateTradeStatus(int tradeId, String status) {
-        String sql = "UPDATE trade SET trade_status = ? WHERE trade_id = ?";
+        String sql = """
+                UPDATE trade
+                SET trade_status = ?
+                WHERE trade_id = ?;
+                """;
         jdbcTemplate.update(sql, status, tradeId);
     }
 
     @Override
+    @Transactional
     public void updateTradeReceived(int tradeId, int userId, boolean received) {
-        String sql;
-        if (isUserA(tradeId, userId)) {
-            sql = "UPDATE trade SET user_a_received = ? WHERE trade_id = ?";
-        } else {
-            sql = "UPDATE trade SET user_b_received = ? WHERE trade_id = ?";
-        }
+        String sql = isUserA(tradeId, userId)
+                ? "UPDATE trade SET user_a_received = ? WHERE trade_id = ?;"
+                : "UPDATE trade SET user_b_received = ? WHERE trade_id = ?;";
+
         jdbcTemplate.update(sql, received, tradeId);
     }
 
     @Override
+    @Transactional
     public void deleteTrade(int tradeId) {
         String sql = "DELETE FROM trade WHERE trade_id = ?";
         jdbcTemplate.update(sql, tradeId);
