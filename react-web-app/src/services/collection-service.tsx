@@ -9,7 +9,7 @@ class CollectionService {
     const state: RootState = store.getState()
     const token = state.authentication.token
 
-    const config: AxiosRequestConfig<any> = {
+    const config: AxiosRequestConfig = {
       headers: {
         'Content-Type': 'application/json'
       }
