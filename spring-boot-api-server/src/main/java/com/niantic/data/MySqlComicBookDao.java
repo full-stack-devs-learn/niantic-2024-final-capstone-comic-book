@@ -290,8 +290,30 @@ public class MySqlComicBookDao implements ComicBookDao {
 
     @Override
     @Transactional
-    public void deleteComicBookFromUserTradeCollection(int comicBookId, int userId) {
+    public ComicBook deleteComicBookFromUserTradeCollection(int comicBookId, int userId) {
+        ComicBook comicBook = getComicBookById(comicBookId);
+        if (comicBook == null) {
+            return null;
+        }
 
+        // remove from trade collection and move back to the user's collection
+        String sql = """
+                DELETE FROM user_trade_collection
+                WHERE user_id = ?
+                AND comic_book_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        sql = """
+                INSERT INTO user_collection
+                (user_id, comic_book_id)
+                VALUES (?, ?);
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        return comicBook;
     }
 
     private void deleteComicBook(int comicBookId) {
@@ -301,6 +323,7 @@ public class MySqlComicBookDao implements ComicBookDao {
                 """;
 
         jdbcTemplate.update(sql, comicBookId);
+
     }
 
     private ComicBook mapRow(SqlRowSet row) {
