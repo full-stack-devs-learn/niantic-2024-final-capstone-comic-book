@@ -148,7 +148,7 @@ CREATE TABLE trade (
     FOREIGN KEY (comic_b_book_id) REFERENCES comic_book(comic_book_id)
 );
 
--- Correcting the trade table insert values to match existing IDs in users and comic_book
+-- Inserting data into trade table
 INSERT INTO trade (user_a_id, user_b_id, comic_a_book_id, comic_b_book_id, trade_status, user_a_received, user_b_received) 
 VALUES 
 (1, 2, 1, 2, 'Pending', FALSE, FALSE),  

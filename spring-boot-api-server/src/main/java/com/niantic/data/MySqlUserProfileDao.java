@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class MySqlUserProfileDao implements UserProfileDao {
     }
 
     @Override
+    @Transactional
     public void addUserProfile(UserProfile userProfile) {
         String sql = "INSERT INTO user_profile (user_id, email, first_name, last_name, address) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, userProfile.getUserId(), userProfile.getEmail(),
@@ -60,6 +62,7 @@ public class MySqlUserProfileDao implements UserProfileDao {
     }
 
     @Override
+    @Transactional
     public void updateUserProfile(int userId, UserProfile userProfile) {
         String sql = "UPDATE user_profile SET email = ?, first_name = ?, last_name = ?, address = ? WHERE user_id = ?";
         jdbcTemplate.update(sql, userProfile.getEmail(), userProfile.getFirstName(),
@@ -67,6 +70,7 @@ public class MySqlUserProfileDao implements UserProfileDao {
     }
 
     @Override
+    @Transactional
     public void deleteUserProfile(int userId) {
         String sql = "DELETE FROM user_profile WHERE user_id = ?";
         jdbcTemplate.update(sql, userId);
