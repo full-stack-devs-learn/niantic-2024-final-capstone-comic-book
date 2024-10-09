@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authenticationReducer from "./features/authentication-slice";
+import collectionReducer from "./features/collection-slice";
+import comicBookIdReducer from "./features/comic-details-slice";
 
 const store = configureStore({
     reducer: {
-        authentication: authenticationReducer
+        authentication: authenticationReducer,
+        collection: collectionReducer,
+        comicBookId: comicBookIdReducer
     }
 })
 
