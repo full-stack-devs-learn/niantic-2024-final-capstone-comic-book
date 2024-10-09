@@ -20,3 +20,9 @@
 {
     font-family: "Bangers", system-ui;
 }
+
+svg
+{
+    margin-right: .7rem;
+    margin-bottom: .1rem;
+}
