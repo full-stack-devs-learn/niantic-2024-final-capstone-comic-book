@@ -27,8 +27,19 @@ class CollectionService
 
     async getUserCollection(): Promise<ComicBook[]>
     {
-        const response = await axios.get<ComicBook[]>(this.baseUrl);
+        const response = await axios.get<ComicBook[]>(this.baseUrl, this.createHeaders());
         return response.data;
+    }
+
+    async addComicBookToUserCollection(comicBook: ComicBook): Promise<ComicBook>
+    {
+        const response = await axios.post<ComicBook>(this.baseUrl, comicBook, this.createHeaders());
+
+        return response.data;
+    } 
+
+    async removeComicBookToUserCollection(comicBookId: number) {
+        return axios.delete<void>(`${this.baseUrl}/${comicBookId}`)
     }
 }
 

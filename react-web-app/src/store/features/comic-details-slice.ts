@@ -1,27 +1,36 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SelectedComicBook } from "../../models/SelectedComicBook";
+import { ComicBook } from "../../models/ComicBook";
 
-interface SelectedComicBookState {
-    comicBookId: number | null;
-    marvelId: number;
-    title: string;
-    description: string | null;
-    isInCollection: boolean;
-    isInWishlist: boolean;
-    officialDetails: string | null;   
+interface ComicBookIdState {
+    comicBookId: number | null
 }
 
-const initialState: SelectedComicBookState = {
-    comicBookId: null,
-    marvelId: 0,
-    title: 'title',
-    description: null,
-    isInCollection: false,
-    isInWishlist: false,
-    officialDetails: null,
+const initialState: ComicBookIdState = {
+    comicBookId: null
 }
 
-// export const loadComicBook = 
+// export const loadComicBookId = return comi
+// export const setComicBookId = 
+
+// load comic book details from API
+const comicBookIdSlice = createSlice({
+    name: 'comicBookId',
+    initialState,
+    reducers: {
+        selectedComicBook: (state) => {
+            state.comicBookId = 0;
+        },
+        setComicBookId: (state, action) => {
+            state.comicBookId =  action.payload
+        }
+    }
+})
+
 
 //using marvel id, check if comic book exists in user collection
 // display details of comic book in collection
+
+export const { setComicBookId } = comicBookIdSlice.actions;
+const comicBookIdReducer = comicBookIdSlice.reducer;
+export default comicBookIdReducer;

@@ -10,11 +10,13 @@ import Register from './components/authentication/register/Register'
 import UserHomePage from './components/user-home-page/UserHomePage'
 import Explore from './components/explore/Explore'
 import Details from './components/details/Details';
+import Collection from './components/collection/Collection';
 
 function App() {
 
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useSelector((state: RootState) => state.authentication);
+  const { comicBookId } = useSelector((state: RootState) => state.comicBookId);
 
   // dispatch();
   
@@ -31,8 +33,8 @@ function App() {
 
         { !isAuthenticated && <Route path='/' element={<Home />} />}
         { isAuthenticated && <Route path='/' element={<UserHomePage />} />}
-        { isAuthenticated && <Route path='/details' element={<Details />} />}
-        {/* { isAuthenticated && <Route path='/collection' element={<UserHomePage />} />} */}
+        { isAuthenticated && <Route path=':comicBookId' element={<Details />} />}
+        { isAuthenticated && <Route path='/collection' element={<Collection />} />}
 
       </Routes>
       </main>

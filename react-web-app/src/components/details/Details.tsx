@@ -21,9 +21,6 @@ export default function Details()
                         <input type="radio" className="btn-check" name="btnradio" id="btnradio2"  />
                         <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio2">Add to Collection</label>
                     </div>
-                    <div className="d-grid gap-2">
-                        <button className="btn btn-sm btn-outline-dark" type="button">Visit official site</button>
-                    </div>
                 </div>
             </div>
         </div>
