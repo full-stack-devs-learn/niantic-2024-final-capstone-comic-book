@@ -101,9 +101,17 @@ public class ComicBooksController {
 
     @DeleteMapping("collection/{comicBookId}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> updateComicBookCondition(@PathVariable int comicBookId, Principal principal) {
+    public ResponseEntity<?> deleteComicBookFromCollection(@PathVariable int comicBookId, Principal principal) {
         int userId = userDao.getIdByUsername(principal.getName());
         comicBookDao.deleteComicBookFromUserCollection(comicBookId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("wishlist/{comicBookId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> deleteComicBookFromWishList(@PathVariable int comicBookId, Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        comicBookDao.deleteComicBookFromUserWishList(comicBookId, userId);
         return ResponseEntity.noContent().build();
     }
 
