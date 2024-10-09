@@ -99,4 +99,28 @@ public class ComicBooksController {
         return ResponseEntity.ok(comicBook);
     }
 
+    @DeleteMapping("collection/{comicBookId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> deleteComicBookFromCollection(@PathVariable int comicBookId, Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        comicBookDao.deleteComicBookFromUserCollection(comicBookId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("wishlist/{comicBookId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> deleteComicBookFromWishList(@PathVariable int comicBookId, Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        comicBookDao.deleteComicBookFromUserWishList(comicBookId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("trade-collection/{comicBookId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> deleteComicBookFromTradeCollection(@PathVariable int comicBookId, Principal principal) {
+        int userId = userDao.getIdByUsername(principal.getName());
+        ComicBook comicBook = comicBookDao.deleteComicBookFromUserTradeCollection(comicBookId, userId);
+        return ResponseEntity.ok(comicBook);
+    }
+
 }
