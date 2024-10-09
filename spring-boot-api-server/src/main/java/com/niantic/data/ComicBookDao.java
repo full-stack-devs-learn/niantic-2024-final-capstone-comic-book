@@ -27,6 +27,6 @@ public interface ComicBookDao {
 
     void deleteComicBookFromUserWishList(int comicBookId, int userId);
 
-    void deleteComicBookFromUserTradeCollection(int comicBookId, int userId);
+    ComicBook deleteComicBookFromUserTradeCollection(int comicBookId, int userId);
 
 }
