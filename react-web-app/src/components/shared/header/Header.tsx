@@ -70,7 +70,6 @@ export default function Header() {
                 </li>
               </>
             }
-
             {
               isAuthenticated &&
               <>
