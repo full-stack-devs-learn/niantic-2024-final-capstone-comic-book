@@ -25,7 +25,7 @@ export default function CollectionPage() {
       {/* {error && <div>There was an error <button onClick={() => dispatch(clearError())}>x</button></div>} */}
       <section className="d-flex flex-column align-items-center">
         <h1 className="text-center fs-2">My Collection</h1>
-        <BooksContainer books={collection} />
+        <BooksContainer books={collection} type="collection" />
         <h2 className="text-center fs-2">My Trade Collection</h2>
       </section>
     </>
