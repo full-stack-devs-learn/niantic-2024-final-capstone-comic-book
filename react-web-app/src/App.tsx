@@ -9,7 +9,7 @@ import Register from './components/authentication/register/Register'
 import UserHomePage from './components/user-home-page/UserHomePage'
 import Explore from './components/explore/Explore'
 import Details from './components/details/Details'
-import Collection from './components/collection/Collection'
+import CollectionPage from './components/collection-page/CollectionPage'
 
 import './App.css'
 
@@ -30,11 +30,7 @@ function App() {
             {!isAuthenticated && <Route path='/' element={<Home />} />}
             {isAuthenticated && <Route path='/' element={<UserHomePage />} />}
             {isAuthenticated && <Route path=':comicBookId' element={<Details />} />}
-            {isAuthenticated && <Route path='/collection' element={<Collection />} />}
-
-            {!isAuthenticated && <Route path='/' element={<Home />} />}
-            {isAuthenticated && <Route path='/' element={<UserHomePage />} />}
-            {isAuthenticated && <Route path='/collection' element={<Collection />} />}
+            {isAuthenticated && <Route path='/collection' element={<CollectionPage />} />}
           </Routes>
         </main>
 
