@@ -15,8 +15,9 @@ import './App.css'
 
 function App() {
 
-  const { isAuthenticated } = useSelector((state: RootState) => state.authentication);
-
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.authentication);
+  
   return (
     <>
       <Router>
@@ -32,8 +33,10 @@ function App() {
             {isAuthenticated && <Route path=':comicBookId' element={<Details />} />}
             {isAuthenticated && <Route path='/collection' element={<Collection />} />}
 
-          </Routes>
-        </main>
+        { !isAuthenticated && <Route path='/' element={<Home />} />}
+        { isAuthenticated && <Route path='/' element={<UserHomePage />} />}
+        {/* { isAuthenticated && <Route path=':comicBookId' element={<Details />} />} */}
+        { isAuthenticated && <Route path='/collection' element={<Collection />} />}
 
         <Footer />
       </Router>
