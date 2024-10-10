@@ -9,8 +9,8 @@ import Register from './components/authentication/register/Register'
 import UserHomePage from './components/user-home-page/UserHomePage'
 import Explore from './components/explore/Explore'
 import CollectionPage from './components/collection-page/CollectionPage'
+import WishlistPage from './components/wishlist-page/WishlistPage'
 import NotFound from './components/not-found-page/NotFound'
-
 import './App.css'
 
 function App() {
@@ -31,6 +31,7 @@ function App() {
             {!isAuthenticated && <Route path='/' element={<Home />} />}
             {isAuthenticated && <Route path='/' element={<UserHomePage />} />}
             {isAuthenticated && <Route path='/collection' element={<CollectionPage />} />}
+            {isAuthenticated && <Route path='/wishlist' element={<WishlistPage />} />}
           </Routes>
         </main>
 
