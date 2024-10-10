@@ -8,8 +8,8 @@ import Login from './components/authentication/login/Login'
 import Register from './components/authentication/register/Register'
 import UserHomePage from './components/user-home-page/UserHomePage'
 import Explore from './components/explore/Explore'
-import Details from './components/details/Details'
 import CollectionPage from './components/collection-page/CollectionPage'
+import NotFound from './components/not-found-page/NotFound'
 
 import './App.css'
 
@@ -24,12 +24,12 @@ function App() {
 
         <main className="container p-4">
           <Routes>
+            <Route path="*" element={<NotFound />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/explore' element={<Explore />} />
             {!isAuthenticated && <Route path='/' element={<Home />} />}
             {isAuthenticated && <Route path='/' element={<UserHomePage />} />}
-            {isAuthenticated && <Route path=':comicBookId' element={<Details />} />}
             {isAuthenticated && <Route path='/collection' element={<CollectionPage />} />}
           </Routes>
         </main>
