@@ -2,14 +2,13 @@ import './Comics.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { Link } from 'react-router-dom';
-import { setComicBookDetail } from '../../store/features/comic-details-slice';
+import { useState } from 'react';
+// import { setComicBookDetail } from '../../store/features/comic-details-slice';
 // import { comicBookDe }
 
 
 export default function Comics({ data, onClick }: any)
 {
-    const dispatch = useDispatch<AppDispatch>();
-    let { comicBookDetail } = useSelector((state: RootState) => state.comicBookDetail);
 
     // comicBookDetail = {
     //     comicId: null,
@@ -25,10 +24,10 @@ export default function Comics({ data, onClick }: any)
         <div className="comics">
             {
                 data.map((comic: any) => {
-                const detailsUrl = `/${comic.id}`
+                // const detailsUrl = `/${comic.id}`
 
                 return (
-                    <Link to={detailsUrl}>
+                    // <Link to={detailsUrl}>
                     <a
                         key={comic.id}
                         className="comicCard"
@@ -37,6 +36,7 @@ export default function Comics({ data, onClick }: any)
                             backgroundSize: "cover",
                         }}
                         // onClick={() => dispatch(setComicBookDetail(comicBookDetail))}
+                        id={comic.id}
                         onClick={() => onClick(comic.id)}
                         target="_blank"
                         rel="noreferrer"
@@ -44,7 +44,7 @@ export default function Comics({ data, onClick }: any)
                         <div className="caption">{comic.title}</div>
                         <div className="caption bottom">View Comic Details</div>
                     </a>
-                    </Link>
+                    // </Link>
                 )
             })}
         </div>

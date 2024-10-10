@@ -3,7 +3,7 @@ import './Details.css'
 // import { RootState } from '../../store/store';
 // import { useParams } from 'react-router-dom';
 
-export default function Details()
+export default function Details({ title, description, photoUrl }: any)
 {
     // const { id } = useParams<{ id: string }>(); 
     // if user is logged out, display marvel details only
@@ -14,11 +14,11 @@ export default function Details()
     return (
         <div className="card details-card text-white mb-3 section-container">
             <div className='content-container'>
-                <img className='img' src='https://cdn.marvel.com/u/prod/marvel/i/mg/3/00/66c721c18211f/clean.jpg'/>
+                <img className='img' src={photoUrl} />
                 <div className='details-container'>
                     <div className='details'>
-                        {/* <h3>{data.title}</h3>
-                        <p>{data.id}</p> */}
+                        <h3>{title}</h3>
+                        <p>{description}</p>
                     </div>
                     <div className='form-check wishlist'>
                         <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
