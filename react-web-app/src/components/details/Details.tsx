@@ -1,15 +1,24 @@
 import './Details.css'
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../../store/store';
+// import { useParams } from 'react-router-dom';
 
-export default function Details()
+export default function Details({ title, description, photoUrl }: any)
 {
+    // const { id } = useParams<{ id: string }>(); 
+    // if user is logged out, display marvel details only
+    // if user is logged in, display add to collection and wishlist buttons
+
+    // const { data } = useSelector((state: RootState) => state.data);
+
     return (
         <div className="card details-card text-white mb-3 section-container">
             <div className='content-container'>
-                <img className='img' src='https://cdn.marvel.com/u/prod/marvel/i/mg/3/00/66c721c18211f/clean.jpg'/>
+                <img className='img' src={photoUrl} />
                 <div className='details-container'>
                     <div className='details'>
-                        <h3>Comic Book Title</h3>
-                        <p>IS THIS FOWL WORTHY OF THE HAMMER OF THOR?! When DONALD DUCK chaperones HUEY, DEWEY AND LOUIE on an archaeological trip to search for ancient Viking artifacts, he finds more than he bargained for when he comes across the STONE DUCKS FROM SATURN preparing for an invasion. But everything changes when he discovers an enchanted cane that causes an egg-ceptional transformation, gifting him with the POWER OF THOR! Can he learn how to use his new abilities in time to save DUCKBURG before he changes back? Find out in this mind-twisting retelling of THE MIGHTY THOR'S THUNDEROUS ORIGIN!</p>
+                        <h3>{title}</h3>
+                        <p>{description}</p>
                     </div>
                     <div className='form-check wishlist'>
                         <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
