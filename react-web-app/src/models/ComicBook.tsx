@@ -16,7 +16,6 @@ export class ComicBook {
     title!: string;
     description?: string;
     thumbnail?: { path: string; extension: string };
-    imageUrl?: string;
     isInCollection?: boolean;
     isInWishlist?: boolean;
     imageUrl?: string;
