@@ -1,0 +1,37 @@
+.user-profile {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .profile-details p,
+  .edit-profile label {
+    margin: 10px 0;
+  }
+  
+  .edit-profile input {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 15px;
+    margin: 10px 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }

@@ -6,6 +6,8 @@ import comicsSearchResultsReducer from "./features/comics-search-result-slice";
 import characterSearchResultsReducer from "./features/character-search-result-slice";
 import wishlistReducer from './features/wishlist-slice';
 // import searchTermReducer from "./features/search-term-slice";
+// import comicBookIdReducer from "./features/comic-details-slice";
+import userProfileReducer from './features/user-profile-slice';
 
 const store = configureStore({
     reducer: {
@@ -14,8 +16,10 @@ const store = configureStore({
         wishlist: wishlistReducer,
         // comicBookDetail: comicBookDataReducer,
         comicsSearchResults: comicsSearchResultsReducer,
-        characterSearchResults: characterSearchResultsReducer // ,
+        characterSearchResults: characterSearchResultsReducer, 
         // searchTermReducer
+        // comicBookId: comicBookIdReducer,
+        userProfile: userProfileReducer,
     }
 })
 
