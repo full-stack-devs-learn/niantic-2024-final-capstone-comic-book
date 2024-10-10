@@ -23,7 +23,7 @@ export default function WishlistPage() {
   return (
     <section className="d-flex flex-column align-items-center">
       <h1 className="text-center fs-2">My Wishlist</h1>
-      <BooksContainer books={wishlist} />
+      <BooksContainer books={wishlist} type="wishlist" />
     </section>
   )
 }
