@@ -23,8 +23,9 @@ export default function CollectionPage() {
 
   return (
     <section className="d-flex flex-column align-items-center">
-      <h1 className="text-center">My Collection</h1>
+      <h1 className="text-center fs-2">My Collection</h1>
       <BooksContainer books={collection} />
+      <h2 className="text-center fs-2">My Trade Collection</h2>
     </section>
   )
 }
