@@ -44,7 +44,7 @@ public class TradeController {
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> createTrade(@RequestBody Trade trade, Principal principal) {
+    public ResponseEntity<?> addTrade(@RequestBody Trade trade, Principal principal) {
         int userId = userDao.getIdByUsername(principal.getName());
         trade.setUserAId(userId);
         Trade createdTrade = tradeDao.addTrade(trade);

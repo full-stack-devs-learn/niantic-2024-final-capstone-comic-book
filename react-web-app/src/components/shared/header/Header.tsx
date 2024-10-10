@@ -1,95 +1,104 @@
-import { Link, NavLink } from "react-router-dom"
-import { useAppDispatch } from "../../../store/hooks";
-import { logout } from "../../../store/features/authentication-slice";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
+import { Link, NavLink } from 'react-router-dom'
+import { useAppDispatch } from '../../../store/hooks'
+import { logout } from '../../../store/features/authentication-slice'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../store/store'
+import { BoxArrowRight, Person, Book, BookFill, ArrowLeftRight } from 'react-bootstrap-icons'
+import logoImage from '/images/logo.png'
 import './Header.css'
 
 export default function Header() {
 
-    const dispatch = useAppDispatch()
-    const { isAuthenticated, user } = useSelector((state: RootState) => state.authentication)
+  const dispatch = useAppDispatch()
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.authentication)
 
-    function handleLogout() {
-        localStorage.removeItem('user')
-        dispatch(logout())
-    }
+  function handleLogout() {
+    localStorage.removeItem('user')
+    dispatch(logout())
+  }
 
-    return (
-        <nav className="navbar navbar-expand-lg bg-dark navbar2" data-bs-theme="dark">
-            <div className="container">
-                <div className="collapse navbar-collapse">
-                    <img className="icon" src="/public/logo.png" />
-                    <Link className="navbar-brand comic-circle" to="/">Comic Circle</Link>  
-                </div>
-                <div className="collapse navbar-collapse" id="navbarColor01">
-                    <ul className="navbar-nav ms-md-auto">
-                        {
-                            !isAuthenticated && <>
-                                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                                    <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                                    <hr className="d-lg-none my-2 text-white-50" />
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/explore">Explore</NavLink>
-                                </li>
-                                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                                    <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                                    <hr className="d-lg-none my-2 text-white-50" />
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/login">Login</NavLink>
-                                </li>
-                                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                                    <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                                    <hr className="d-lg-none my-2 text-white-50" />
-                                </li>
-                            </>
-                        }
-
-                        {
-                            isAuthenticated && <>
-                                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                                    <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                                    <hr className="d-lg-none my-2 text-white-50" />
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/"><button className="nav-link">Explore</button></NavLink>
-                                </li>
-                                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                                    <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                                    <hr className="d-lg-none my-2 text-white-50" />
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to='/collection'><button className="nav-link">Collection</button></NavLink>
-                                </li>
-                                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                                    <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                                    <hr className="d-lg-none my-2 text-white-50" />
-                                </li>
-                                <li className="nav-item dropdown nav-link">
-                                    <button className="nav-link dropdown-toggle show" data-bs-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="true">
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="1.35rem" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                                        </svg>
-                                            {user?.username}
-                                    </button>
-                                    <div className="dropdown-menu" data-bs-popper="static">
-                                        <NavLink className="nav-link dropdown-item" to='/profile'>Profile</NavLink>
-                                        <div className="dropdown-divider"></div>
-                                        <NavLink className="nav-link dropdown-item" to='' onClick={handleLogout}>Logout</NavLink>
-                                    </div>
-                                </li>
-                                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                                    <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                                    <hr className="d-lg-none my-2 text-white-50" />
-                                </li>
-                            </>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    )
+  return (
+    <nav className="navbar navbar-expand-lg bg-dark navbar2" data-bs-theme="dark">
+      <div className="container">
+        <Link className="navbar-brand d-flex flex-row gap-3 align-items-center" to="/">
+          <img src={logoImage} className="logo-img" alt="Comic Circle Logo" />
+          <h4 className="mb-0">Comic Circle</h4>
+        </Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbar">
+          <ul className="navbar-nav">
+            <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr className="d-lg-none my-2 text-white-50" />
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/explore">Explore Comics</NavLink>
+            </li>
+            <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+              <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+              <hr className="d-lg-none my-2 text-white-50" />
+            </li>
+            {
+              isAuthenticated &&
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/trade">Trade Comics</NavLink>
+                </li>
+                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                  <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                  <hr className="d-lg-none my-2 text-white-50" />
+                </li>
+              </>
+            }
+          </ul>
+          <ul className="navbar-nav ms-md-auto">
+            {
+              !isAuthenticated &&
+              <>
+                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                  <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                  <hr className="d-lg-none my-2 text-white-50" />
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/login">Login</NavLink>
+                </li>
+                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                  <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                  <hr className="d-lg-none my-2 text-white-50" />
+                </li>
+              </>
+            }
+            {
+              isAuthenticated &&
+              <>
+                <li className="nav-item dropdown">
+                  <a className="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <h6>Welcome, {user?.username}!</h6>
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li><Link className="dropdown-item d-flex flex-row align-items-center gap-2" to="/profile">
+                      <Person />Profile
+                    </Link></li>
+                    <li><Link className="dropdown-item d-flex flex-row align-items-center gap-2" to="collection">
+                      <BookFill />Collection
+                    </Link></li>
+                    <li><Link className="dropdown-item d-flex flex-row align-items-center gap-2" to="wishlist">
+                      <Book />Wishlist
+                    </Link></li>
+                    <li><Link className="dropdown-item  d-flex flex-row align-items-center gap-2" to="trades">
+                      <ArrowLeftRight />Trades
+                    </Link></li>
+                    <li><hr className="dropdown-divider" style={{ borderColor: 'rgba(255, 255, 255, 0.5)' }} /></li>
+                    <li><button className="dropdown-item d-flex flex-row align-items-center gap-2" onClick={handleLogout}><BoxArrowRight />Logout</button></li>
+                  </ul>
+                </li>
+              </>
+            }
+          </ul>
+        </div>
+      </div>
+    </nav>
+  )
 }
