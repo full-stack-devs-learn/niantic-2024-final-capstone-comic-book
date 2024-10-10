@@ -1,26 +1,169 @@
 import './Details.css'
+import collectionService from '../../services/collection-service'
+import wishlistService from '../../services/wishlist-service';
+import { ComicBook } from '../../models/ComicBook';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { clear } from '../../store/features/collection-slice'
+import { useAppDispatch } from '../../store/hooks';
+import { useEffect, useState } from 'react';
 
-export default function Details()
-{
+
+export default function Details(this: any, { title, description, photoUrl, comicId }: any) {
+    const dispatch = useAppDispatch()
+    const { isAuthenticated } = useSelector((state: RootState) => state.authentication);
+    const [isInCollection, setIsInCollection] = useState(false);
+    const [isInWishlist, setIsInWishlist] = useState(false);
+
+    // if user is logged out, display marvel details only
+    // if user is logged in, display add to collection and wishlist buttons
+
+    const newComicBook: ComicBook = {
+        marvelId: comicId,
+        title: title,
+        description: description,
+        imageUrl: photoUrl,
+    }
+
+    const newWishlist: ComicBook = {
+        marvelId: comicId,
+        title: title,
+        description: description,
+        imageUrl: photoUrl,
+    }
+
+    const checkInCollection = async () => {
+        try {
+            const userCollection = await collectionService.getUserCollection();
+            const comicIdFromCollection = (userCollection).find(c => c.marvelId == comicId)?.marvelId || 0;
+            setIsInCollection(comicIdFromCollection > 0)
+            console.log(`is in collection ${isInCollection}`)
+        }
+        catch (error) {
+            console.error("Error fetching collection: ", error);
+        }
+    }
+
+    useEffect(() => {
+        checkInCollection();
+    }, []);
+
+    useEffect(() => {
+        checkInCollection();
+    }, [isInCollection])
+
+
+    const checkInWishlist = async () => {
+        try {
+            const userWishlist = await wishlistService.getUserWishlist();
+            const comicIdFromWishlist = userWishlist.find(c => c.marvelId == comicId)?.marvelId || 0;
+            setIsInCollection(comicIdFromWishlist > 0)
+            console.log(`is in wishlist? ${isInWishlist}`)
+        }
+        catch (error) {
+            console.error("Error fetching wishlist: ", error);
+        }
+    }
+
+    useEffect(() => {
+        checkInWishlist();
+    }, []);
+
+    useEffect(() => {
+        checkInWishlist();
+    }, [isInWishlist])
+
+
+    async function updateUserCollection() {
+        checkInCollection();
+
+        if (!isInCollection) {
+            await collectionService.addComicBookToUserCollection(newComicBook)
+            console.log(`Comic book has been added to collection with Marvel Id: ${comicId}`)
+            // setIsInCollection(true);
+            checkInCollection();
+
+            dispatch(clear());
+        }
+        else {
+            console.log(`is in collection before removal ${isInCollection}`)
+            await collectionService.removeComicBookFromUserCollection(comicId)
+            console.log('Comic book has been removed from collection')
+            setIsInCollection(false);
+            console.log(`is in collection after removal ${isInCollection}`)
+
+            dispatch(clear());
+        }
+
+        checkInCollection();
+    }
+
+
+
+    async function updateUserWishlist() {
+        checkInWishlist();
+
+        if (!isInWishlist) {
+            await wishlistService.addComicBookToUserWishlist(newComicBook)
+            console.log(`Comic book has been added to wishlist with Marvel Id: ${comicId}`)
+            setIsInWishlist(true);
+
+            dispatch(clear());
+        }
+        else {
+            console.log(`is in wishlist before removal ${isInWishlist}`)
+            await wishlistService.removeComicBookFromUserWishlist(comicId)
+            console.log('Comic book has been removed from wishlist')
+            setIsInWishlist(false);
+            console.log(`is in wishlist after removal ${isInCollection}`)
+
+            dispatch(clear());
+        }
+
+        checkInWishlist();
+        // isInCollection;
+        // console.log(`is in collection? ${isInCollection}`)
+    }
+
+
     return (
         <div className="card details-card text-white mb-3 section-container">
             <div className='content-container'>
-                <img className='img' src='https://cdn.marvel.com/u/prod/marvel/i/mg/3/00/66c721c18211f/clean.jpg'/>
+                <img className='img' src={photoUrl} />
                 <div className='details-container'>
                     <div className='details'>
-                        <h3>Comic Book Title</h3>
-                        <p>IS THIS FOWL WORTHY OF THE HAMMER OF THOR?! When DONALD DUCK chaperones HUEY, DEWEY AND LOUIE on an archaeological trip to search for ancient Viking artifacts, he finds more than he bargained for when he comes across the STONE DUCKS FROM SATURN preparing for an invasion. But everything changes when he discovers an enchanted cane that causes an egg-ceptional transformation, gifting him with the POWER OF THOR! Can he learn how to use his new abilities in time to save DUCKBURG before he changes back? Find out in this mind-twisting retelling of THE MIGHTY THOR'S THUNDEROUS ORIGIN!</p>
+                        <h3>{title}</h3>
+                        <p>{description}</p>
                     </div>
-                    <div className='form-check wishlist'>
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        <label className="form-check-label" htmlFor="flexCheckDefault">Add to wishlist</label>
-                    </div>
-                    <div className="btn-group collection" role="group">
-                        <input type="radio" className="btn-check" name="btnradio" id="btnradio1"  />
-                        <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio1">Not in Collection</label>
-                        <input type="radio" className="btn-check" name="btnradio" id="btnradio2"  />
-                        <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio2">Add to Collection</label>
-                    </div>
+                    {
+                        isAuthenticated &&
+                        <>
+                            <div className="btn-group collection" role="group" aria-label="Basic checkbox toggle button group">
+                                <input type="checkbox" className="btn-check" name="btncheck" id="btncheck1" checked={isInWishlist} onChange={updateUserWishlist} />
+                                {
+                                    !isInWishlist && <label className="btn btn-sm btn-outline-primary" htmlFor="btncheck1">Add to Wishlist</label>
+
+                                }
+                                {
+                                    isInWishlist && <label className="btn btn-sm btn-outline-primary" htmlFor="btncheck1">Added to Wishlist</label>
+                                }
+                            </div>
+                            <div>
+
+                            </div>
+                            <div className="btn-group collection" role="group" aria-label="Basic checkbox toggle button group">
+                                <input type="checkbox" className="btn-check" name="btncheck" id="btncheck2" checked={isInCollection} onChange={updateUserCollection} />
+                                {
+                                    !isInCollection && <label className="btn btn-lg btn-outline-primary" htmlFor="btncheck2">Add to Collection</label>
+
+                                }
+                                {
+                                    isInCollection && <label className="btn btn-lg btn-outline-primary" htmlFor="btncheck2">Added to Collection</label>
+                                }
+
+                            </div>
+                        </>
+                    }
                 </div>
             </div>
         </div>

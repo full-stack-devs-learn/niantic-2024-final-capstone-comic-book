@@ -1,0 +1,33 @@
+.book-card {
+    padding: 1rem;
+    height: 400px;
+    width: 250px;
+    border: 2px solid black;
+    box-shadow: 4px 4px black;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+.card-image {
+    height: 300px;
+    filter: grayscale(100);
+    transition: 0.2s linear;
+}
+
+.book-card:hover .card-image {
+    filter: grayscale(0);
+}
+
+.book-card:hover {
+    box-shadow: 6px 6px black;
+    transform: translate(-2px, -2px);
+}
+
+.icon {
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.icon:hover {
+    color: white;
+}

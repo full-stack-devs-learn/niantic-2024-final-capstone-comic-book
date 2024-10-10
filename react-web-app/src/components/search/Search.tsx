@@ -3,12 +3,20 @@ import { useState } from 'react';
 import Characters from '../characters/Characters';
 import Comics from '../comics/Comics';
 import md5 from "md5";
+import Details from '../details/Details';
 
 export default function Search()
 {
     const [ characterName, setCharacterName ] = useState("");
     const [ characterData, setCharacterData ] = useState(null);
     const [ comicData, setComicData ] = useState(null);
+    const [ comicDetails, setComicDetails ] = useState(null); // TEST CODE
+    const [ comicId, setComicId ] = useState(null);
+    const [ comicSelection, setComicSelection ] = useState(null);
+
+    const [ title, setTitle ] = useState('');
+    const [ description, setDescription ] = useState('');
+    const [ photoUrl, setPhotoUrl ] = useState('');
 
     const publicKey: string = import.meta.env.VITE_PUBLIC_KEY;
     const privateKey: string = import.meta.env.VITE_PRIVATE_KEY;
@@ -49,6 +57,31 @@ export default function Search()
         })
     }
 
+    const getComicSelection = (comicId: number) => {
+        window.scrollTo({ top:0, left: 0});
+
+        const timeStamp= new Date().getTime();
+        const hash: string = generateHash(timeStamp);
+
+        const url = `https://gateway.marvel.com:443/v1/public/comics/${comicId}?apikey=${publicKey}&hash=${hash}&ts=${timeStamp}`
+
+        fetch(url).then(response => response.json()).then((results) => {
+            setComicSelection(results.data);
+            setComicId(results.data.results[0].id);
+            setTitle(results.data.results[0].title)
+            setDescription(results.data.results[0].description)
+            setPhotoUrl(`${results.data.results[0].thumbnail.path}.${results.data.results[0].thumbnail.extension}`)
+            console.log(`comics selection id: ${results.data.results[0].id}`)
+            console.log(`comics selection: ${comicSelection}`)
+            console.log(`title ${title}`)
+            console.log(photoUrl)
+            // console.log(`comics selection data: ${results.data.title}`)
+        }).catch(error => {
+            console.log("Error while fetching comic details", error)
+        })
+
+    }
+
     const generateHash = (timeStamp: number) => {
         return md5(timeStamp + privateKey + publicKey);
     }
@@ -61,6 +94,7 @@ export default function Search()
         setCharacterData(null);
         setComicData(null);
         setCharacterName(''); 
+        setComicSelection(null);
     }
 
 
@@ -86,8 +120,15 @@ export default function Search()
             }
 
             {
-                comicData && comicData['results'][0] && <Comics data={comicData['results']} />
+                comicData && comicData['results'][0] && !comicSelection && !comicId && <Comics data={comicData['results']} onClick={getComicSelection} />
             }
+
+            {
+                comicData && comicSelection && comicSelection['results'][0] && (<Details photoUrl={photoUrl} title={title} description={description} comicId={comicId}></Details>)
+            }
+
         </div>
     )
+
+    
 }
