@@ -67,19 +67,19 @@ const collectionSlice = createSlice({
             state.error = action.error.message || 'Failed to add comic book to collection';
         });
 
-        //remove from collection
-        // builder.addCase(removeComicBookToUserCollection.pending, (state) => {
-        //     state.loading = true;
-        //     state.error = null;
-        // });
-        // builder.addCase(removeComicBookToUserCollection.fulfilled, (state, action: PayloadAction<number>) => {
-        //     state.loading = false;
-        //     state.collection= state.collection.filter(c => c.comicBookId !== action.payload);
-        // });
-        // builder.addCase(removeComicBookToUserCollection.rejected, (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.error.message || 'Failed to remove comic book from collection';
-        // });
+        // remove from collection
+        builder.addCase(removeComicBookToUserCollection.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        });
+        builder.addCase(removeComicBookToUserCollection.fulfilled, (state, action: any) => {
+            state.loading = false;
+            state.collection= state.collection.filter(c => c.comicBookId !== action.payload);
+        });
+        builder.addCase(removeComicBookToUserCollection.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message || 'Failed to remove comic book from collection';
+        });
     },
 })
 
