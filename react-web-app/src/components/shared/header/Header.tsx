@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useAppDispatch } from '../../../store/hooks'
 import { logout } from '../../../store/features/authentication-slice'
+import { clear as clearCollection } from '../../../store/features/collection-slice'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../store/store'
 import { BoxArrowRight, Person, Book, BookFill, ArrowLeftRight } from 'react-bootstrap-icons'
@@ -15,6 +16,8 @@ export default function Header() {
   function handleLogout() {
     localStorage.removeItem('user')
     dispatch(logout())
+    dispatch(clearCollection())
+    
   }
 
   return (
