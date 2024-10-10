@@ -3,15 +3,19 @@ import collectionService from '../../services/collection-service'
 import { ComicBook } from '../../models/ComicBook';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { clear } from '../../store/features/collection-slice'
+import { useAppDispatch } from '../../store/hooks';
+import { useEffect, useState } from 'react';
 
 export default function Details(this: any, { title, description, photoUrl, comicId }: any)
 {
+    const dispatch = useAppDispatch()
     const { isAuthenticated } = useSelector((state:RootState) => state.authentication);
+    const [ isInCollection, setIsInCollection ] = useState(false);
+    const [ isInWishlist, setIsInWishlist ] = useState(false);
 
     // if user is logged out, display marvel details only
     // if user is logged in, display add to collection and wishlist buttons
-    let comicIdFromCollection: number = 0;
-    let comicIdFromWishlist: number = 0;
 
     const newComicBook: ComicBook = {
         marvelId: comicId,
@@ -19,41 +23,121 @@ export default function Details(this: any, { title, description, photoUrl, comic
         description: description,
         imageUrl: photoUrl,
     }
-    
-    async function checkInCollection(comicId: number)
-    {
-        const userCollection = await collectionService.getUserCollection();
-        comicIdFromCollection = userCollection.find(c => c.marvelId == comicId)?.marvelId || 0;
+
+    const newWishlist: ComicBook = {
+        marvelId: comicId,
+        title: title,
+        description: description,
+        imageUrl: photoUrl,
     }
 
-    const isInCollection: boolean = comicIdFromCollection > 0;
-    console.log(`is in collection ${isInCollection}`)
+    const checkInCollection = async () =>
+    {
+        try
+        {
+            const userCollection = await collectionService.getUserCollection();
+            const comicIdFromCollection = (userCollection).find(c => c.marvelId == comicId)?.marvelId || 0;
+            setIsInCollection(comicIdFromCollection > 0)
+            console.log(`is in collection ${isInCollection}`)
+        }
+        catch (error)
+        {
+            console.error("Error fetching collection: ", error);
+        }
+    }
 
-    // async function checkInWishlist(comicId: number)
-    // {
-    //     const userWishlist = await wishlistService.getUserWishlist();
-    //     comicIdFromCollection = userWishlist.find(c => c.marvelId == comicId)?.marvelId || 0;
-    // }
+    useEffect(() => {
+        checkInCollection();
+    }, []);
 
-    // const isInWishlist: boolean = comicIdFromWishlist > 0;
-    // console.log(`is in wishlist ${isInWishlist}`)
+    useEffect(() => 
+    {
+        checkInCollection();
+    }, [isInCollection])
 
-    // async function updateUserCollection()
-    // {
-    //     if(comicIdFromCollection == 0)
-    //     {
-    //         await collectionService.addComicBookToUserCollection(newComicBook)
-    //         console.log('Comic book has been added to collection')
-    //     }
-    //     else
-    //     {
-    //         await collectionService.removeComicBookToUserCollection(comicId)
-    //         console.log('Comic book has been removed from collection')
-    //     }
+    
+    async function updateUserCollection()
+    {
+        checkInCollection();
+        
+        if(!isInCollection)
+            {
+                await collectionService.addComicBookToUserCollection(newComicBook)
+                console.log(`Comic book has been added to collection with Marvel Id: ${comicId}`)
+                setIsInCollection(true);
+                
+                dispatch(clear());
+            }
+            else
+            {
+                console.log(`is in collection before removal ${isInCollection}`)
+                await collectionService.removeComicBookFromUserCollection(comicId)
+                console.log('Comic book has been removed from collection')
+                setIsInCollection(false);
+                console.log(`is in collection after removal ${isInCollection}`)
+                
+                dispatch(clear());
+            }
+            
+            checkInCollection();
+        }
 
-    // }
-
-
+        // const checkInWishlist = async () =>
+        //     {
+        //         try
+        //         {
+        //             const userWishlist = await wishlistService.getUserWishlist();
+        //             const comicIdFromWishlist = userWishlist.find(c => c.marvelId == comicId)?.marvelId || 0;
+        //             // const userCollection = await collectionService.getUserCollection();
+        //             // const comicIdFromCollection = (userCollection).find(c => c.marvelId == comicId)?.marvelId || 0;
+        //             setIsInCollection(comicIdFromWishlist > 0)
+        //             console.log(`is in wishlist? ${isInWishlist}`)
+        //         }
+        //         catch (error)
+        //         {
+        //             console.error("Error fetching wishlist: ", error);
+        //         }
+        //     }
+        
+        //     useEffect(() => {
+        //         checkInWishlist();
+        //     }, []);
+        
+        //     useEffect(() => 
+        //     {
+        //         checkInWishlist();
+        //     }, [isInWishlist])
+        
+            
+        //     async function updateUserWishlist()
+        //     {
+        //         checkInWishlist();
+                
+        //         if(!isInWishlist)
+        //             {
+        //                 await wishlistService.addComicBookToUserWishlist(newComicBook)
+        //                 console.log(`Comic book has been added to wishlist with Marvel Id: ${comicId}`)
+        //                 setIsInWishlist(true);
+                        
+        //                 dispatch(clear());
+        //             }
+        //             else
+        //             {
+        //                 console.log(`is in wishlist before removal ${isInWishlist}`)
+        //                 await wishlistService.removeComicBookFromUserWishlist(comicId)
+        //                 console.log('Comic book has been removed from wishlist')
+        //                 setIsInWishlist(false);
+        //                 console.log(`is in wishlist after removal ${isInCollection}`)
+                        
+        //                 dispatch(clear());
+        //             }
+                    
+        //             checkInWishlist();
+        //             // isInCollection;
+        //             // console.log(`is in collection? ${isInCollection}`)
+        //         }
+        
+        
     return (
         <div className="card details-card text-white mb-3 section-container">
             <div className='content-container'>
@@ -66,25 +150,29 @@ export default function Details(this: any, { title, description, photoUrl, comic
                     {
                         isAuthenticated &&
                         <>
-                        <div className='form-check wishlist'>
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" htmlFor="flexCheckDefault">Add to wishlist</label>
-
-                            {/* <input type="radio" className="btn-check" name="btnradio" id="btnradio1" checked={!isInWishlist} />
-                            <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio1">Not in Collection</label>
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2" checked={isInWishlist} />
-                            <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio2">Added to Collection</label>
-                             */}
+                        <div className="btn-group collection" role="group" aria-label="Basic checkbox toggle button group">
+                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2" checked={isInCollection} onChange={updateUserCollection} />
+                            {
+                                !isInCollection && <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio2">Add to Wishlist</label>
+                                
+                            }
+                            {
+                                isInCollection && <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio2">Added to Wishlist</label>
+                            }              
                         </div>
-                        <div className="btn-group collection" role="group">
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio1" checked={!isInCollection} />
-                            <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio1">Not in Collection</label>
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2" checked={isInCollection} />
-                            <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio2">Added to Collection</label>
-                            {/* <input type="radio" className="btn-check" name="btnradio" id="btnradio1"  />
-                            <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio1">Not in Collection</label>
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2" onClick={updateUserCollection} />
-                            <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio2">Add to Collection</label> */}
+                        <div>
+
+                        </div>
+                        <div className="btn-group collection" role="group" aria-label="Basic checkbox toggle button group">
+                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2" checked={isInCollection} onChange={updateUserCollection} />
+                            {
+                                !isInCollection && <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio2">Add to Collection</label>
+                                
+                            }
+                            {
+                                isInCollection && <label className="btn btn-lg btn-outline-primary" htmlFor="btnradio2">Added to Collection</label>
+                            }
+                        
                         </div>
                         </>
                     }
@@ -93,3 +181,23 @@ export default function Details(this: any, { title, description, photoUrl, comic
         </div>
     )
 }
+
+
+// let comicIdFromCollection: number = 0;
+// // let comicIdFromWishlist: number = 0;
+
+// const newComicBook: ComicBook = {
+//     marvelId: comicId,
+//     title: title,
+//     description: description,
+//     imageUrl: photoUrl,
+// }
+
+// async function checkInCollection(comicId: number)
+// {
+//     const userCollection = await collectionService.getUserCollection();
+//     comicIdFromCollection = userCollection.find(c => c.marvelId == comicId)?.marvelId || 0;
+// }
+
+// const isInCollection: boolean = comicIdFromCollection > 0;
+// console.log(`is in collection ${isInCollection}`)

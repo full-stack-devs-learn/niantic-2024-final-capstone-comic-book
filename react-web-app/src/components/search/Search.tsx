@@ -67,6 +67,7 @@ export default function Search()
 
         fetch(url).then(response => response.json()).then((results) => {
             setComicSelection(results.data);
+            setComicId(results.data.results[0].id);
             setTitle(results.data.results[0].title)
             setDescription(results.data.results[0].description)
             setPhotoUrl(`${results.data.results[0].thumbnail.path}.${results.data.results[0].thumbnail.extension}`)
