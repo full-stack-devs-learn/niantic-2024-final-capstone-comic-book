@@ -1,18 +1,18 @@
 import { RootState } from '../../store/store'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { useEffect } from 'react'
-import { loadCollection } from '../../store/features/collection-slice'
+import { loadWishlist } from '../../store/features/wishlist-slice'
 import BooksContainer from '../comic-books/books-container/BooksContainer'
 import './WishlistPage.css'
 
 export default function WishlistPage() {
 
   const dispatch = useAppDispatch()
-  const { collection, loading, error } = useAppSelector((state: RootState) => state.collection)
+  const { wishlist, loading, error } = useAppSelector((state: RootState) => state.wishlist)
 
   useEffect(() => {
-    if (collection.length === 0) {
-      dispatch(loadCollection(null))
+    if (wishlist.length === 0) {
+      dispatch(loadWishlist(null))
     }
   }, [dispatch])
 
@@ -23,7 +23,7 @@ export default function WishlistPage() {
   return (
     <section className="d-flex flex-column align-items-center">
       <h1 className="text-center fs-2">My Wishlist</h1>
-      <BooksContainer books={collection} />
+      <BooksContainer books={wishlist} />
     </section>
   )
 }
