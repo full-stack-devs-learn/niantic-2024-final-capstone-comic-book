@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../store/hooks'
 import { logout } from '../../../store/features/authentication-slice'
 import { clear as clearCollection } from '../../../store/features/collection-slice'
@@ -13,11 +13,13 @@ export default function Header() {
   const dispatch = useAppDispatch()
   const { isAuthenticated, user } = useSelector((state: RootState) => state.authentication)
 
+  const navigate = useNavigate()
+
   function handleLogout() {
     localStorage.removeItem('user')
     dispatch(logout())
     dispatch(clearCollection())
-    
+    navigate("/")
   }
 
   return (

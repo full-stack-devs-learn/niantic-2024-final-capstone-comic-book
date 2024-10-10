@@ -43,6 +43,11 @@ const collectionSlice = createSlice({
   reducers: {
     clear(state){
       state.collection = []
+      state.error = null
+    },
+    clearError(state)
+    {
+      state.error = null
     }
   },
   extraReducers: (builder) => {
@@ -107,7 +112,7 @@ const collectionSlice = createSlice({
   },
 })
 
-export const { clear } = collectionSlice.actions
+export const { clear, clearError } = collectionSlice.actions
 
 const collectionReducer = collectionSlice.reducer
 export default collectionReducer
