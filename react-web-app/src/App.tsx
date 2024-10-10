@@ -10,6 +10,7 @@ import UserHomePage from './components/user-home-page/UserHomePage'
 import Explore from './components/explore/Explore'
 import Details from './components/details/Details'
 import Collection from './components/collection/Collection'
+import UserProfile from './components/user-profile/UserProfile';
 
 import './App.css'
 
@@ -31,6 +32,7 @@ function App() {
             {isAuthenticated && <Route path='/' element={<UserHomePage />} />}
             {isAuthenticated && <Route path=':comicBookId' element={<Details />} />}
             {isAuthenticated && <Route path='/collection' element={<Collection />} />}
+            {isAuthenticated && <Route path='/profile' element={<UserProfile />} />}
 
           </Routes>
         </main>
