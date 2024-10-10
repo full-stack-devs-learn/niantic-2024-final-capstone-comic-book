@@ -75,7 +75,7 @@ export default function Header() {
               <>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <h6>Welcome, {user?.username}!</h6>
+                    <h6 className="mb-0">Welcome, {user?.username}!</h6>
                   </a>
                   <ul className="dropdown-menu">
                     <li><Link className="dropdown-item d-flex flex-row align-items-center gap-2" to="/profile">
