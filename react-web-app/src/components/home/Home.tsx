@@ -1,7 +1,7 @@
 import { useState } from "react";
 import demoService from "../../services/demo-service"
-import './Home.css'
 import { Link } from 'react-router-dom';
+import './Home.css'
 
 export default function Home() {
   const [data, setData] = useState<any>('');
