@@ -78,7 +78,7 @@ INSERT INTO comic_book (comic_book_id, marvel_id, title, description, image_url,
 VALUES
     (1, 18237, 'X-Man (1995) #64', 
     'Nate Grey encounters a cult of mutant transcendent telepaths known as The Gauntlet! Who are they, and why have they been targeted by a powerful alien life form?', 
-    'http://i.annihil.us/u/prod/marvel/i/mg/7/c0/57718888bfc9c', 
+    'http://i.annihil.us/u/prod/marvel/i/mg/7/c0/57718888bfc9c.jpg', 
     'http://marvel.com/comics/issue/18237/x-man_1995_64', 
     '', 1995, 64),
     (2, 21385, 'Ultimate Origins (2007) #1', 

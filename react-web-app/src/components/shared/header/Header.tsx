@@ -1,7 +1,8 @@
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../store/hooks'
 import { logout } from '../../../store/features/authentication-slice'
 import { clear as clearCollection } from '../../../store/features/collection-slice'
+import { clear as clearWishlist } from '../../../store/features/wishlist-slice'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../store/store'
 import { BoxArrowRight, Person, Book, BookFill, ArrowLeftRight } from 'react-bootstrap-icons'
@@ -13,11 +14,14 @@ export default function Header() {
   const dispatch = useAppDispatch()
   const { isAuthenticated, user } = useSelector((state: RootState) => state.authentication)
 
+  const navigate = useNavigate()
+
   function handleLogout() {
     localStorage.removeItem('user')
     dispatch(logout())
     dispatch(clearCollection())
-    
+    dispatch(clearWishlist())
+    navigate("/")
   }
 
   return (
