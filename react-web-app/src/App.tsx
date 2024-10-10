@@ -31,10 +31,6 @@ function App() {
             {isAuthenticated && <Route path='/' element={<UserHomePage />} />}
             {isAuthenticated && <Route path=':comicBookId' element={<Details />} />}
             {isAuthenticated && <Route path='/collection' element={<CollectionPage />} />}
-
-            {!isAuthenticated && <Route path='/' element={<Home />} />}
-            {isAuthenticated && <Route path='/' element={<UserHomePage />} />}
-            {isAuthenticated && <Route path='/collection' element={<Collection />} />}
           </Routes>
         </main>
 
