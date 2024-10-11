@@ -6,12 +6,14 @@ import comicsSearchResultsReducer from "./features/comics-search-result-slice";
 import characterSearchResultsReducer from "./features/character-search-result-slice";
 import wishlistReducer from './features/wishlist-slice';
 import userProfileReducer from './features/user-profile-slice';
+import tradeComicsReducer from './features/trade-comics-slice';
 
 const store = configureStore({
     reducer: {
         authentication: authenticationReducer,
         collection: collectionReducer,
         tradeCollection: tradeCollectionReducer,
+        tradeComics: tradeComicsReducer,
         wishlist: wishlistReducer,
         comicsSearchResults: comicsSearchResultsReducer,
         characterSearchResults: characterSearchResultsReducer, 
