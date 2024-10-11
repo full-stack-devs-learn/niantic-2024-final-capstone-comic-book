@@ -9,7 +9,7 @@ interface BooksContainerProps {
 
 export default function BooksContainer({ books, type }: BooksContainerProps) {
   return (
-    <div className="d-flex flex-row flex-wrap gap-3 mb-5">
+    <div className="d-flex flex-row flex-wrap justify-content-center gap-3 mb-5">
       {
         books.map((book) => (
           <BookCard 

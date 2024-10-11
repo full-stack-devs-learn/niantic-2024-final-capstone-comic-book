@@ -4,6 +4,7 @@ import { logout } from '../../../store/features/authentication-slice'
 import { clear as clearCollection } from '../../../store/features/collection-slice'
 import { clear as clearTradeCollection } from '../../../store/features/trade-collection-slice'
 import { clear as clearWishlist } from '../../../store/features/wishlist-slice'
+import { clear as clearTradeComics } from '../../../store/features/trade-comics-slice'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../store/store'
 import { BoxArrowRight, Person, Book, BookFill, ArrowLeftRight } from 'react-bootstrap-icons'
@@ -23,6 +24,7 @@ export default function Header() {
     dispatch(clearCollection())
     dispatch(clearWishlist())
     dispatch(clearTradeCollection())
+    dispatch(clearTradeComics())
     navigate("/")
   }
 

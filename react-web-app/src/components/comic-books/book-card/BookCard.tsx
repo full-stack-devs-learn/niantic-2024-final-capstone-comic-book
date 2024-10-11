@@ -3,6 +3,7 @@ import { useAppDispatch } from '../../../store/hooks';
 import { addComicBookToCollection, removeComicBookFromUserCollection, removeComicBookFromCollection } from '../../../store/features/collection-slice';
 import { removeComicBookFromUserWishlist } from '../../../store/features/wishlist-slice';
 import { removeComicBookFromUserTradeCollection, addComicBookToUserTradeCollection } from '../../../store/features/trade-collection-slice';
+import { clear as clearTradeComics } from '../../../store/features/trade-comics-slice'
 import { ArrowLeftRight, Book, Pen, Trash3 } from 'react-bootstrap-icons';
 import './BookCard.css';
 
@@ -29,6 +30,7 @@ export default function BookCard({ book, type }: BookCardProps) {
         const result = await dispatch(removeComicBookFromUserTradeCollection(book.comicBookId));
         if (result.type === 'comics/trade-collection/remove/fulfilled') {
           dispatch(addComicBookToCollection(book));
+          dispatch(clearTradeComics());
         }
       }
     }
@@ -40,6 +42,7 @@ export default function BookCard({ book, type }: BookCardProps) {
     const result = await dispatch(addComicBookToUserTradeCollection(book));
     if (result.type === 'comics/trade-collection/add/fulfilled' && book.comicBookId) {
       dispatch(removeComicBookFromCollection(book.comicBookId));
+      dispatch(clearTradeComics());
     }
   }
 

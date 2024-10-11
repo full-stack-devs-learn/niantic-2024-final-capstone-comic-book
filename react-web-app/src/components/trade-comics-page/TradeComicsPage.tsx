@@ -1,19 +1,18 @@
 import { RootState } from '../../store/store'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { useEffect } from 'react'
-import { loadCollection } from '../../store/features/collection-slice'
-import { loadTradeCollection } from '../../store/features/trade-collection-slice'
+import { loadTradeComics } from '../../store/features/trade-comics-slice'
 import BooksContainer from '../comic-books/books-container/BooksContainer'
 import './TradeComicsPage.css'
 
 export default function TradeComicsPage() {
 
   const dispatch = useAppDispatch()
-  const { collection, loading, error } = useAppSelector((state: RootState) => state.collection)
+  const { tradeComics, loading, error } = useAppSelector((state: RootState) => state.tradeComics)
 
   useEffect(() => {
-    if (collection.length === 0) {
-      dispatch(loadCollection(null))
+    if (tradeComics.length === 0) {
+      dispatch(loadTradeComics(null))
     }
   }, [dispatch])
 
@@ -23,8 +22,8 @@ export default function TradeComicsPage() {
         <h1 className="text-center fs-2 mb-5">Browse Comics Available to Trade</h1>
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
-        {collection.length === 0 && <h5 className="text-center">No comics are currently available for trading.<br></br>Please check back later!</h5>}
-        <BooksContainer books={collection} type="trade" />
+        {tradeComics.length === 0 && <h5 className="text-center">No comics are currently available for trading.<br></br>Please check back later!</h5>}
+        <BooksContainer books={tradeComics} type="trade" />
       </section>
     </>
   )
