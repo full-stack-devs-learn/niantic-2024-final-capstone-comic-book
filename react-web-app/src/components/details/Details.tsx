@@ -5,6 +5,7 @@ import { ComicBook } from '../../models/ComicBook';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { clear } from '../../store/features/collection-slice'
+import { clear as clearWishlist } from '../../store/features/wishlist-slice'
 import { useAppDispatch } from '../../store/hooks';
 import { useEffect, useState } from 'react';
 
@@ -108,7 +109,7 @@ export default function Details(this: any, { title, description, photoUrl, comic
             console.log(`Comic book has been added to wishlist with Marvel Id: ${comicId}`)
             setIsInWishlist(true);
 
-            dispatch(clear());
+            dispatch(clearWishlist());
         }
         else {
             console.log(`is in wishlist before removal ${isInWishlist}`)
@@ -117,7 +118,7 @@ export default function Details(this: any, { title, description, photoUrl, comic
             setIsInWishlist(false);
             console.log(`is in wishlist after removal ${isInCollection}`)
 
-            dispatch(clear());
+            dispatch(clearWishlist());
         }
 
         checkInWishlist();
