@@ -23,7 +23,7 @@ export default function TradeComicsPage() {
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
         {tradeComics.length === 0 && <h5 className="text-center">No comics are currently available for trading.<br></br>Please check back later!</h5>}
-        <BooksContainer books={tradeComics} type="trade" />
+        <BooksContainer books={tradeComics} type="trade-comics" />
       </section>
     </>
   )
