@@ -32,7 +32,7 @@ export const removeComicBookFromUserTradeCollection = createAsyncThunk('comics/t
   return comicBookId
 })
 
-const collectionSlice = createSlice({
+const tradeCollectionSlice = createSlice({
   name: 'tradeCollection',
   initialState,
   reducers: {
@@ -89,7 +89,7 @@ const collectionSlice = createSlice({
   },
 })
 
-export const { clear, clearError } = collectionSlice.actions
+export const { clear, clearError } = tradeCollectionSlice.actions
 
-const collectionReducer = collectionSlice.reducer
-export default collectionReducer
+const tradeCollectionReducer = tradeCollectionSlice.reducer
+export default tradeCollectionReducer
