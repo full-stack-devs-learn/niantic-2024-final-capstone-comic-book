@@ -1,0 +1,37 @@
+/* .login-card
+{
+    max-width: 50%;
+} */
+
+#login
+{
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.login-btn
+{
+    margin: 0 auto;
+}
+
+.register
+{
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.register-text
+{
+    margin-top: 0;
+    color: whitesmoke;
+}
+
+.row-container
+{
+    text-align: center;
+}
+
+.register > p
+{
+    font-size: .9rem;
+}
