@@ -83,7 +83,7 @@ We created a wireframe to visualize the application's structure and user interfa
 ![Wireframe](./img/wireframe.png)
 
 ### Agile Practices
-We applied Agile methodologies by working in short development sprints. Daily stand-ups and weekly retrospectives helped us stay on track and continuously improve the product.
+We applied Agile methodologies by working in short development sprints. Daily stand-ups and retrospectives helped us stay on track and continuously improve the product.
 
 ## Challenges, Approach, and Solutions
 
