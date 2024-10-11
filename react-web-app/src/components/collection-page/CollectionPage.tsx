@@ -28,10 +28,12 @@ export default function CollectionPage() {
         <h1 className="text-center fs-2">My Collection</h1>
         {loadingCollection && <p>Loading collection...</p>}
         {errorCollection && <p>Error loading collection: {errorCollection}</p>}
+        {collection.length === 0 && <h6>No comics in your collection</h6>}
         <BooksContainer books={collection} type="collection" />
         <h2 className="text-center fs-2">My Trade Collection</h2>
         {loadingTradeCollection && <p>Loading collection...</p>}
         {errorTradeCollection && <p>Error loading collection: {errorTradeCollection}</p>}
+        {tradeCollection.length === 0 && <h6>No comics in your trade collection</h6>}
         <BooksContainer books={tradeCollection} type="trade-collection" />
       </section>
     </>

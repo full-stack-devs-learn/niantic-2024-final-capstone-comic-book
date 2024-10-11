@@ -23,6 +23,7 @@ export default function WishlistPage() {
   return (
     <section className="d-flex flex-column align-items-center">
       <h1 className="text-center fs-2">My Wishlist</h1>
+      {wishlist.length === 0 && <h6>No comics in your wishlist</h6>}
       <BooksContainer books={wishlist} type="wishlist" />
     </section>
   )
