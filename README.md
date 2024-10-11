@@ -88,12 +88,53 @@ We applied Agile methodologies by working in short development sprints. Daily st
 ## Challenges, Approach, and Solutions
 
 ### Elena Bychenkova
+#### Challenge:  
+Managing collections in our comic book app, making sure users can move books between collections smoothly and edit book details without issues.
 
-#### Challenge:
 #### Solution:
-#### Code I'm Proud of:
+We used Redux Toolkit to handle adding, removing, and editing books in different collections. Redux Toolkit helps us manage state and asynchronous actions efficiently. By dispatching actions, we ensure our app runs smoothly and looks great.
 
+#### Code I'm Proud of: 
+This snippet shows how we handle moving a book from the trade collection back to the main collection and editing book conditions directly in the UI
+```tsx
+  const handleMoveToTrade = async (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+    event.stopPropagation();
+    const result = await dispatch(addComicBookToUserTradeCollection(book));
+    if (result.type === 'comics/trade-collection/add/fulfilled') {
+      dispatch(removeComicBookFromCollection(book.comicBookId));
+    }
+  }
+```
 
+#### Backend:  
+We used transactions to ensure data consistency during database operations. If something went wrong while moving a comic book, the previous actions would be undone to keep our data safe. Here’s a snippet demonstrating the use of @Transactional:
+```Java
+@Transactional
+    public ComicBook addComicBookToUserTradeCollection(int comicBookId, int userId) {
+        ComicBook comicBook = getComicBookById(comicBookId);
+        if (comicBook == null) {
+            return null;
+        }
+
+        String sql = """
+                INSERT INTO user_trade_collection
+                (user_id, comic_book_id)
+                VALUES (?, ?);
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        sql = """
+                DELETE FROM user_collection
+                WHERE user_id = ?
+                AND comic_book_id = ?;
+                """;
+
+        jdbcTemplate.update(sql, userId, comicBookId);
+
+        return comicBook;
+    }
+```
 
 ### Dureti Shemsi
 
