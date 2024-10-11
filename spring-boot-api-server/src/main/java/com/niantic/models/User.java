@@ -23,14 +23,17 @@ public class User {
 
     public User() {
         this.activated = true;
-        this.setAuthorities("USER");
+//        this.setAuthorities("USER");
     }
 
-    public User(int id, String username, String password) {
+    public User(int id, String username, String password, String authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.setAuthorities("USER");
+        if(authorities != null)
+        {
+            this.setAuthorities(authorities);
+        }
         this.activated = true;
     }
 
@@ -73,11 +76,28 @@ public class User {
 
     @Override
     public String toString() {
-        return STR."User{id=\{id}, username='\{username}\{'\''}, activated=\{activated}, authorities=\{authorities}\{'}'}";
+
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", activated=" + activated +
+                ", authorities=" + authorities +
+                '}';
+
+//        return STR."User{id=\{id}, username='\{username}\{'\''}, activated=\{activated}, authorities=\{authorities}\{'}'}";
     }
 
     @JsonIgnore
     public String getRole() {
+        if (authorities.size() > 0)
+        {
+            for (Authority role : authorities)
+            {
+                return role.getName()
+                        .toUpperCase();
+            }
+        }
+
         return "ROLE_USER";
     }
 }

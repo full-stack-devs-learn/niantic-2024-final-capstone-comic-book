@@ -1,26 +1,31 @@
-/* .login-card
+/* .register-card
 {
     max-width: 50%;
 } */
 
-#login
+label
+{
+    font-size: 0.8rem;
+}
+
+#register
 {
     margin-top: 2rem;
     text-align: center;
 }
 
-.login-btn
+.register-btn
 {
     margin: 0 auto;
 }
 
-.register
+.login
 {
     text-align: center;
     margin-top: 1.5rem;
 }
 
-.register-text
+.login-text
 {
     margin-top: 0;
     color: whitesmoke;
@@ -31,7 +36,7 @@
     text-align: center;
 }
 
-.register > p
+.login > p
 {
-    font-size: .9rem;
+    font-size: .8rem;
 }
