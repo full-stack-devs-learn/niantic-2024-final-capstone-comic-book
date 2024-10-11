@@ -2,6 +2,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../store/hooks'
 import { logout } from '../../../store/features/authentication-slice'
 import { clear as clearCollection } from '../../../store/features/collection-slice'
+import { clear as clearTradeCollection } from '../../../store/features/trade-collection-slice'
 import { clear as clearWishlist } from '../../../store/features/wishlist-slice'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../store/store'
@@ -21,6 +22,7 @@ export default function Header() {
     dispatch(logout())
     dispatch(clearCollection())
     dispatch(clearWishlist())
+    dispatch(clearTradeCollection())
     navigate("/")
   }
 

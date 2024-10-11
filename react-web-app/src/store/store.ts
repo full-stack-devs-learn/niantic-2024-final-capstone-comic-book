@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authenticationReducer from "./features/authentication-slice";
 import collectionReducer from "./features/collection-slice";
+import tradeCollectionReducer from "./features/trade-collection-slice";
 import comicsSearchResultsReducer from "./features/comics-search-result-slice";
 import characterSearchResultsReducer from "./features/character-search-result-slice";
 import wishlistReducer from './features/wishlist-slice';
@@ -10,6 +11,7 @@ const store = configureStore({
     reducer: {
         authentication: authenticationReducer,
         collection: collectionReducer,
+        tradeCollection: tradeCollectionReducer,
         wishlist: wishlistReducer,
         comicsSearchResults: comicsSearchResultsReducer,
         characterSearchResults: characterSearchResultsReducer, 
