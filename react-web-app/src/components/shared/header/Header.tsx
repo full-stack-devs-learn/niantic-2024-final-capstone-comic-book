@@ -40,28 +40,16 @@ export default function Header() {
         </button>
         <div className="collapse navbar-collapse" id="navbar">
           <ul className="navbar-nav">
-            {/* <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-              <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-              <hr className="d-lg-none my-2 text-white-50" />
-            </li> */}
             <li className="nav-item">
               <NavLink className="nav-link" to="/explore">Explore</NavLink>
             </li>
-            {/* <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-              <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-              <hr className="d-lg-none my-2 text-white-50" />
-            </li> */}
             {
               isAuthenticated &&
-              <>
+              
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/trade">Trade</NavLink>
                 </li>
-                {/* <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                  <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                  <hr className="d-lg-none my-2 text-white-50" />
-                </li> */}
-              </>
+              
             }
           </ul>
           <ul className="navbar-nav ms-md-auto">
@@ -85,10 +73,10 @@ export default function Header() {
               isAuthenticated &&
               <>
                 <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-              <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-              <hr className="d-lg-none my-2 text-white-50" />
-            </li>
-                <li className="nav-item dropdown">
+                  <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                  <hr className="d-lg-none my-2 text-white-50" />
+                </li>
+                <ul className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Welcome, {user?.username}!
                   </a>
@@ -109,11 +97,11 @@ export default function Header() {
                     <li><hr className="dropdown-divider" style={{ borderColor: 'rgba(255, 255, 255, 0.5)' }} /></li>
                     <li><button className="dropdown-item d-flex flex-row align-items-center gap-2" onClick={handleLogout}><BoxArrowRight />Logout</button></li>
                   </div>
-                </li>
+                </ul>
                 <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-              <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-              <hr className="d-lg-none my-2 text-white-50" />
-            </li>
+                  <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                  <hr className="d-lg-none my-2 text-white-50" />
+                </li>
               </>
             }
           </ul>
