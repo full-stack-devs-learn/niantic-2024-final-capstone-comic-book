@@ -1,7 +1,6 @@
 import './Characters.css';
 
-export default function Characters({data, onClick}: any)
-{
+export default function Characters({ data, onClick }: any) {
     return (
         <div className="characters">
             {
@@ -24,5 +23,5 @@ export default function Characters({data, onClick}: any)
             }
         </div>
     )
-    
+
 }
