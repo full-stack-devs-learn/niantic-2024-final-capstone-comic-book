@@ -54,16 +54,16 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="row row-container mt-3">
-                <label htmlFor="role">Select Role:</label>
-                <select className="form-select mt-2" name="role" id="role" onChange={(e) => setRole(e.target.value)}>
-                    <option value="USER">User</option>
-                    <option value="Admin">Admin</option>
-                </select>
-            </div>
-            <div className="row row-container mt-2">
-                <button className="btn btn-success mt-3" type="submit">Register</button>
-            </div>
+                <div className="hide-role">
+                    <label htmlFor="role">Select Role:</label>
+                    <select className="form-select mt-2" name="role" id="role" onChange={(e) => setRole(e.target.value)}>
+                        <option value="USER">User</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+                <div className="row row-container mt-3 mb-3">
+                    <button className="btn btn-success mt-3 mb-3" type="submit">Register</button>
+                </div>
             </form>
             <div className=" row row-container mt-5 login">
                 <p>Already have an account?</p>
