@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import com.niantic.models.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -27,6 +28,7 @@ public class MySqlUserDao implements UserDao
 
 
     @Override
+    @Transactional
     public User create(User newUser)
     {
         String sql = "INSERT INTO users (username, hashed_password, role) VALUES (?, ?, ?)";
@@ -52,6 +54,7 @@ public class MySqlUserDao implements UserDao
     }
 
     @Override
+    @Transactional
     public List<User> getAll()
     {
         List<User> users = new ArrayList<>();
@@ -70,6 +73,7 @@ public class MySqlUserDao implements UserDao
     }
 
     @Override
+    @Transactional
     public User getUserById(int id)
     {
         String sql = "SELECT * FROM users WHERE user_id = ?";
@@ -85,6 +89,7 @@ public class MySqlUserDao implements UserDao
     }
 
     @Override
+    @Transactional
     public User getByUserName(String username)
     {
         String sql = "SELECT * " +
@@ -101,6 +106,7 @@ public class MySqlUserDao implements UserDao
     }
 
     @Override
+    @Transactional
     public int getIdByUsername(String username)
     {
         User user = getByUserName(username);
@@ -114,6 +120,7 @@ public class MySqlUserDao implements UserDao
     }
 
     @Override
+    @Transactional
     public boolean exists(String username)
     {
         User user = getByUserName(username);
