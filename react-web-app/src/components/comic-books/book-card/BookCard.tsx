@@ -1,8 +1,8 @@
 import { ComicBook } from '../../../models/ComicBook';
 import { useAppDispatch } from '../../../store/hooks';
-import { addComicBookToCollection, removeComicBookFromUserCollection } from '../../../store/features/collection-slice';
+import { addComicBookToCollection, removeComicBookFromUserCollection, removeComicBookFromCollection } from '../../../store/features/collection-slice';
 import { removeComicBookFromUserWishlist } from '../../../store/features/wishlist-slice';
-import { removeComicBookFromUserTradeCollection } from '../../../store/features/trade-collection-slice';
+import { removeComicBookFromUserTradeCollection, addComicBookToUserTradeCollection } from '../../../store/features/trade-collection-slice';
 import { ArrowLeftRight, Book, Pen, Trash3 } from 'react-bootstrap-icons';
 import './BookCard.css';
 
@@ -30,17 +30,20 @@ export default function BookCard({ book, type }: BookCardProps) {
         if (result.type === 'comics/trade-collection/remove/fulfilled') {
           dispatch(addComicBookToCollection(book));
         }
-
       }
     }
   }
 
-  const handleMoveToTrade = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const handleMoveToTrade = async (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     event.stopPropagation();
     console.log('Move to Trade Collection book:', book.title);
+    const result = await dispatch(addComicBookToUserTradeCollection(book));
+    if (result.type === 'comics/trade-collection/add/fulfilled' && book.comicBookId) {
+      dispatch(removeComicBookFromCollection(book.comicBookId));
+    }
   }
 
-  const handleMoveToCollection = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const handleMoveToCollection = async (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     event.stopPropagation();
     console.log('Move to Collection book:', book.title);
   }
@@ -69,7 +72,7 @@ export default function BookCard({ book, type }: BookCardProps) {
         }
         {type === 'trade-collection' &&
           <>
-            <Pen onClick={handleUpdateCondition} className="icon" title="Edit condition" />
+            <Pen onClick={handleUpdateCondition} className="icon" title="Edit book condition" />
             <Trash3 onClick={handleDeleteBook} className="icon" title="Remove form Trade Collection" />
           </>
         }
