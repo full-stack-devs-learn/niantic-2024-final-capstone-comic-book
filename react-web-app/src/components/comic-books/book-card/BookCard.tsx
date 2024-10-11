@@ -1,8 +1,9 @@
 import { ComicBook } from '../../../models/ComicBook';
 import { useAppDispatch } from '../../../store/hooks';
-import { removeComicBookFromUserCollection } from '../../../store/features/collection-slice';
+import { addComicBookToCollection, removeComicBookFromUserCollection, removeComicBookFromCollection } from '../../../store/features/collection-slice';
 import { removeComicBookFromUserWishlist } from '../../../store/features/wishlist-slice';
-import { ArrowLeftRight, Book, Trash3 } from 'react-bootstrap-icons';
+import { removeComicBookFromUserTradeCollection, addComicBookToUserTradeCollection } from '../../../store/features/trade-collection-slice';
+import { ArrowLeftRight, Book, Pen, Trash3 } from 'react-bootstrap-icons';
 import './BookCard.css';
 
 interface BookCardProps {
@@ -23,18 +24,33 @@ export default function BookCard({ book, type }: BookCardProps) {
       } else if (type === 'wishlist') {
         console.log('Delete Comic Book from Wishlist:', book.title);
         dispatch(removeComicBookFromUserWishlist(book.comicBookId));
+      } else if (type === 'trade-collection') {
+        console.log('Delete Comic Book from Trade Collection:', book.title);
+        const result = await dispatch(removeComicBookFromUserTradeCollection(book.comicBookId));
+        if (result.type === 'comics/trade-collection/remove/fulfilled') {
+          dispatch(addComicBookToCollection(book));
+        }
       }
     }
   }
 
-  const handleMoveToTrade = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const handleMoveToTrade = async (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     event.stopPropagation();
     console.log('Move to Trade Collection book:', book.title);
+    const result = await dispatch(addComicBookToUserTradeCollection(book));
+    if (result.type === 'comics/trade-collection/add/fulfilled' && book.comicBookId) {
+      dispatch(removeComicBookFromCollection(book.comicBookId));
+    }
   }
 
-  const handleMoveToCollection = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const handleMoveToCollection = async (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     event.stopPropagation();
     console.log('Move to Collection book:', book.title);
+  }
+
+  const handleUpdateCondition = (event: React.MouseEvent<SVGElement, MouseEvent>) => {
+    event.stopPropagation();
+    console.log('Edit condition of book:', book.title);
   }
 
   return (
@@ -52,6 +68,12 @@ export default function BookCard({ book, type }: BookCardProps) {
           <>
             <Book onClick={handleMoveToCollection} className="icon" title="Move to Collection" />
             <Trash3 onClick={handleDeleteBook} className="icon" title="Remove form Wishlist" />
+          </>
+        }
+        {type === 'trade-collection' &&
+          <>
+            <Pen onClick={handleUpdateCondition} className="icon" title="Edit book condition" />
+            <Trash3 onClick={handleDeleteBook} className="icon" title="Remove form Trade Collection" />
           </>
         }
       </div>
