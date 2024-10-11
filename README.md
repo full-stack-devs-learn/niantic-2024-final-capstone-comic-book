@@ -95,7 +95,7 @@ Managing collections in our comic book app, making sure users can move books bet
 We used Redux Toolkit to handle adding, removing, and editing books in different collections. Redux Toolkit helps us manage state and asynchronous actions efficiently. By dispatching actions, we ensure our app runs smoothly and looks great.
 
 #### Code I'm Proud of: 
-This snippet shows how we handle moving a book from the trade collection back to the main collection and editing book conditions directly in the UI
+This snippet shows how we handle moving a book from the user's main collection to the trading collection:
 ```tsx
   const handleMoveToTrade = async (event: React.MouseEvent<SVGElement, MouseEvent>) => {
     event.stopPropagation();
