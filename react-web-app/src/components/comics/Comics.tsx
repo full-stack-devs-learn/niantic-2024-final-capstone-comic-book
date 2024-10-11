@@ -1,8 +1,4 @@
 import './Comics.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 
 export default function Comics({ data, onClick }: any)
