@@ -70,6 +70,7 @@ export default function BookCard({ book, type }: BookCardProps) {
     event.preventDefault();
     event.stopPropagation();
     dispatch(updateComicBookCondition({ ...book, bookCondition: condition }));
+    dispatch(clearTradeComics());
     setIsEditing(false);
   }
 
