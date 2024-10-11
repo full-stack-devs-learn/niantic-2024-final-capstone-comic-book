@@ -11,8 +11,6 @@ import Explore from './components/explore/Explore'
 import CollectionPage from './components/collection-page/CollectionPage'
 import WishlistPage from './components/wishlist-page/WishlistPage'
 import NotFound from './components/not-found-page/NotFound'
-import Details from './components/details/Details'
-import Collection from './components/collection/Collection'
 import UserProfile from './components/user-profile/UserProfile';
 
 import './App.css'
@@ -37,7 +35,6 @@ function App() {
             {isAuthenticated && <Route path='/collection' element={<CollectionPage />} />}
             {isAuthenticated && <Route path='/wishlist' element={<WishlistPage />} />}
             {isAuthenticated && <Route path='/profile' element={<UserProfile />} />}
-
           </Routes>
         </main>
 
