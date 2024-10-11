@@ -4,10 +4,10 @@
     margin: 20px auto;
     padding: 20px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    /* border-radius: 5px; */
   }
   
-  h1 {
+  h3 {
     text-align: center;
   }
   
@@ -34,4 +34,8 @@
   
   button:hover {
     background-color: #0056b3;
+  }
+
+  .save-btn {
+    margin-right: 1rem;
   }

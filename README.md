@@ -69,7 +69,7 @@ We kicked off development by defining the core features and user stories through
 We designed the application using the MVC pattern to separate concerns effectively. The database was modeled in MySQL, and we created comprehensive diagrams to outline our structure, showing how collections, trades, and users are interconnected. Here are the visual representations of our database schema and services:
 
 #### Database
-![Database](./img/kanban.png)
+![Database](./img/database.png)
 
 #### Models
 ![Models](./img/models.png)
