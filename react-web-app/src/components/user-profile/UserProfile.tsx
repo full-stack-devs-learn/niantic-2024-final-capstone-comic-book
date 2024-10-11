@@ -5,8 +5,9 @@ import {
   getCurrentUserProfile,
   selectUserProfile,
   modifyUserProfile,
-} from '../../store/features/user-profile-slice'; 
+} from '../../store/features/user-profile-slice';
 import './UserProfile.css';
+import { UserProfile as UserProfileModel } from '../../models/UserProfile'; 
 
 interface FormData {
   email: string;
@@ -17,7 +18,7 @@ interface FormData {
 
 const UserProfile: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const userProfile = useSelector((state: RootState) => selectUserProfile(state));
+  const userProfile = useSelector((state: RootState) => selectUserProfile(state)); 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     email: '',
@@ -37,24 +38,31 @@ const UserProfile: React.FC = () => {
         email: userProfile.email,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
-        address: userProfile.address,
+        address: userProfile.address || '', 
       });
     }
   }, [userProfile]);
 
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  
   const handleSave = () => {
     if (userProfile) {
-      dispatch(modifyUserProfile({ userId: userProfile.userId, updatedProfile: formData }));
-      setIsEditing(false);
+  
+      const updatedProfile: UserProfileModel = {
+        ...userProfile, 
+        ...formData, 
+      };
+      dispatch(modifyUserProfile({ updatedProfile }));
+      setIsEditing(false); 
     }
   };
 
-  if (userProfile === null) {
-    return <div>Loading...</div>;
+  if (!userProfile) {
+    return <div>Loading...</div>; 
   }
 
   return (

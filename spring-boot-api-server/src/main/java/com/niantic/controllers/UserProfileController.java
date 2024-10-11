@@ -24,7 +24,7 @@ public class UserProfileController {
         this.userProfileDao = userProfileDao;
         this.userDao = userDao;
     }
-    
+
     @GetMapping("/current-profile")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getCurrentProfile(Principal principal) {
@@ -84,7 +84,8 @@ public class UserProfileController {
         UserProfile existingProfile = userProfileDao.getUserProfileByUserId(userId);
         if (existingProfile != null) {
             userProfileDao.updateUserProfile(userId, updatedProfile);
-            return ResponseEntity.ok("User profile updated successfully.");
+            var userProfile = userProfileDao.getUserProfileByUserId(userId);
+            return ResponseEntity.ok(userProfile);
         }
         return ResponseEntity.notFound().build();
     }
