@@ -5,10 +5,10 @@ import {
   addComicBookToCollection,
   removeComicBookFromUserCollection,
   removeComicBookFromCollection,
-  updateComicBookCondition
+  // updateComicBookCondition
 } from '../../../store/features/collection-slice';
 import { removeComicBookFromUserWishlist } from '../../../store/features/wishlist-slice';
-import { removeComicBookFromUserTradeCollection, addComicBookToUserTradeCollection } from '../../../store/features/trade-collection-slice';
+import { removeComicBookFromUserTradeCollection, addComicBookToUserTradeCollection, updateTradeComicBookCondition } from '../../../store/features/trade-collection-slice';
 import { clear as clearTradeComics } from '../../../store/features/trade-comics-slice'
 import { ArrowLeftRight, Book, Pen, Trash3 } from 'react-bootstrap-icons';
 import './BookCard.css';
@@ -69,7 +69,8 @@ export default function BookCard({ book, type }: BookCardProps) {
   const handleSaveCondition = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     event.stopPropagation();
-    dispatch(updateComicBookCondition({ ...book, bookCondition: condition }));
+    dispatch(updateTradeComicBookCondition({ ...book, bookCondition: condition }));
+    dispatch(clearTradeComics());
     setIsEditing(false);
   }
 
