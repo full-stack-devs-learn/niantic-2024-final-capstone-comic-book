@@ -41,14 +41,20 @@ const collectionSlice = createSlice({
   name: 'collection',
   initialState,
   reducers: {
-    clear(state){
+    clear(state) {
       state.collection = []
       state.error = null
     },
-    clearError(state)
-    {
+    clearError(state) {
       state.error = null
-    }
+    },
+    addComicBookToCollection(state, action: PayloadAction<ComicBook>) {
+      state.collection.push(action.payload);
+    },
+    removeComicBookFromCollection(state, action: PayloadAction<number>) {
+      state.collection = state.collection.filter(book => book.comicBookId !== action.payload);
+    },
+
   },
   extraReducers: (builder) => {
     // fetch collection
@@ -112,7 +118,7 @@ const collectionSlice = createSlice({
   },
 })
 
-export const { clear, clearError } = collectionSlice.actions
+export const { clear, clearError, addComicBookToCollection, removeComicBookFromCollection } = collectionSlice.actions
 
 const collectionReducer = collectionSlice.reducer
 export default collectionReducer
