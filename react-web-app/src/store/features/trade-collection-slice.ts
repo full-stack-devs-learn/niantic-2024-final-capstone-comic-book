@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { ComicBook } from '../../models/ComicBook'
 import tradeCollectionService from '../../services/trade-collection-service'
+import collectionService from '../../services/collection-service'
 
 interface TradeCollectionState {
   tradeCollection: ComicBook[]
@@ -30,6 +31,11 @@ export const addComicBookToUserTradeCollection = createAsyncThunk('comics/trade-
 export const removeComicBookFromUserTradeCollection = createAsyncThunk('comics/trade-collection/remove', async (comicBookId: number) => {
   await tradeCollectionService.removeComicBookFromUserTradeCollection(comicBookId)
   return comicBookId
+})
+
+export const updateTradeComicBookCondition = createAsyncThunk('comics/collection/updateCondition', async (comicBook: ComicBook) => {
+  const updatedComicBook = await collectionService.updateComicBookCondition(comicBook)
+  return updatedComicBook
 })
 
 const tradeCollectionSlice = createSlice({
@@ -84,7 +90,24 @@ const tradeCollectionSlice = createSlice({
     });
     builder.addCase(removeComicBookFromUserTradeCollection.rejected, (state, action) => {
       state.loading = false
-      state.error = action.error.message || 'Failed to remove comic book from collection'
+      state.error = action.error.message || 'Failed to remove comic book from trade collection'
+    })
+
+    // update a trade comic book condition
+    builder.addCase(updateTradeComicBookCondition.pending, (state) => {
+      state.loading = true
+      state.error = null
+    })
+    builder.addCase(updateTradeComicBookCondition.fulfilled, (state, action: PayloadAction<ComicBook>) => {
+      state.loading = false
+      const index = state.tradeCollection.findIndex(book => book.comicBookId === action.payload.comicBookId)
+      if (index !== -1) {
+        state.tradeCollection[index] = action.payload
+      }
+    })
+    builder.addCase(updateTradeComicBookCondition.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error.message || 'Failed to update trade comic book condition'
     })
   },
 })

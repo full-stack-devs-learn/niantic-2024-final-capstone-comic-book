@@ -4,6 +4,7 @@ import { logout } from '../../../store/features/authentication-slice'
 import { clear as clearCollection } from '../../../store/features/collection-slice'
 import { clear as clearTradeCollection } from '../../../store/features/trade-collection-slice'
 import { clear as clearWishlist } from '../../../store/features/wishlist-slice'
+import { clear as clearTradeComics } from '../../../store/features/trade-comics-slice'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../store/store'
 import { BoxArrowRight, Person, Book, BookFill, ArrowLeftRight } from 'react-bootstrap-icons'
@@ -23,6 +24,7 @@ export default function Header() {
     dispatch(clearCollection())
     dispatch(clearWishlist())
     dispatch(clearTradeCollection())
+    dispatch(clearTradeComics())
     navigate("/")
   }
 
@@ -31,35 +33,23 @@ export default function Header() {
       <div className="container">
         <Link className="navbar-brand d-flex flex-row gap-3 align-items-center" to="/">
           <img src={logoImage} className="logo-img" alt="Comic Circle Logo" />
-          <h4 className="mb-0">Comic Circle</h4>
+          <h5 className="mb-0 logo">Comic Circle</h5>
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbar">
           <ul className="navbar-nav">
-            <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-              <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-              <hr className="d-lg-none my-2 text-white-50" />
-            </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/explore">Explore Comics</NavLink>
-            </li>
-            <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-              <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-              <hr className="d-lg-none my-2 text-white-50" />
+              <NavLink className="nav-link" to="/explore">Explore</NavLink>
             </li>
             {
               isAuthenticated &&
-              <>
+              
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/trade">Trade Comics</NavLink>
+                  <NavLink className="nav-link" to="/trade">Trade</NavLink>
                 </li>
-                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
-                  <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
-                  <hr className="d-lg-none my-2 text-white-50" />
-                </li>
-              </>
+              
             }
           </ul>
           <ul className="navbar-nav ms-md-auto">
@@ -82,11 +72,15 @@ export default function Header() {
             {
               isAuthenticated &&
               <>
-                <li className="nav-item dropdown">
-                  <a className="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <h6 className="mb-0">Welcome, {user?.username}!</h6>
+                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                  <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                  <hr className="d-lg-none my-2 text-white-50" />
+                </li>
+                <ul className="nav-item dropdown">
+                  <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Welcome, {user?.username}!
                   </a>
-                  <ul className="dropdown-menu">
+                  <div className="dropdown-menu">
                     <li><Link className="dropdown-item d-flex flex-row align-items-center gap-2" to="/profile">
                       <Person />Profile
                     </Link></li>
@@ -99,9 +93,14 @@ export default function Header() {
                     <li><Link className="dropdown-item  d-flex flex-row align-items-center gap-2" to="trades">
                       <ArrowLeftRight />Trades
                     </Link></li>
+                    <div className="dropdown-divider"></div>
                     <li><hr className="dropdown-divider" style={{ borderColor: 'rgba(255, 255, 255, 0.5)' }} /></li>
                     <li><button className="dropdown-item d-flex flex-row align-items-center gap-2" onClick={handleLogout}><BoxArrowRight />Logout</button></li>
-                  </ul>
+                  </div>
+                </ul>
+                <li className="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+                  <div className="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+                  <hr className="d-lg-none my-2 text-white-50" />
                 </li>
               </>
             }

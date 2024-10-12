@@ -16,9 +16,6 @@ export default function Details(this: any, { title, description, photoUrl, comic
     const [isInCollection, setIsInCollection] = useState(false);
     const [isInWishlist, setIsInWishlist] = useState(false);
 
-    // if user is logged out, display marvel details only
-    // if user is logged in, display add to collection and wishlist buttons
-
     const newComicBook: ComicBook = {
         marvelId: comicId,
         title: title,
@@ -81,7 +78,6 @@ export default function Details(this: any, { title, description, photoUrl, comic
         if (!isInCollection) {
             await collectionService.addComicBookToUserCollection(newComicBook)
             console.log(`Comic book has been added to collection with Marvel Id: ${comicId}`)
-            // setIsInCollection(true);
             checkInCollection();
 
             dispatch(clear());
@@ -122,8 +118,6 @@ export default function Details(this: any, { title, description, photoUrl, comic
         }
 
         checkInWishlist();
-        // isInCollection;
-        // console.log(`is in collection? ${isInCollection}`)
     }
 
 

@@ -12,8 +12,9 @@ import CollectionPage from './components/collection-page/CollectionPage'
 import WishlistPage from './components/wishlist-page/WishlistPage'
 import NotFound from './components/not-found-page/NotFound'
 import UserProfile from './components/user-profile/UserProfile';
-
+import TradeComicsPage from './components/trade-comics-page/TradeComicsPage'
 import './App.css'
+
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
             {isAuthenticated && <Route path='/' element={<UserHomePage />} />}
             {isAuthenticated && <Route path='/collection' element={<CollectionPage />} />}
             {isAuthenticated && <Route path='/wishlist' element={<WishlistPage />} />}
+            {isAuthenticated && <Route path='/trade' element={<TradeComicsPage />} />}
             {isAuthenticated && <Route path='/profile' element={<UserProfile />} />}
           </Routes>
         </main>

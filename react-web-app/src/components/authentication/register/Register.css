@@ -40,3 +40,8 @@ label
 {
     font-size: .8rem;
 }
+
+.hide-role
+{
+    display: none;
+}

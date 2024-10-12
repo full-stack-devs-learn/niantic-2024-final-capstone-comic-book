@@ -31,3 +31,34 @@
 .icon:hover {
     color: white;
 }
+
+.condition-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3px;
+    height: 24px;
+}
+
+.condition-input input {
+    height: 24x;
+    flex: 1;
+    max-width: 70%;
+}
+
+.condition-input button {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    background-color: gray;
+    border: 0;
+    transition: background-color 0.3s
+}
+
+.condition-input button:hover {
+    background-color: dimgrey;
+}
+
+.condition {
+    height: 24px;
+}

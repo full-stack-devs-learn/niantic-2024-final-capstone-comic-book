@@ -5,18 +5,17 @@ import Comics from '../comics/Comics';
 import md5 from "md5";
 import Details from '../details/Details';
 
-export default function Search()
-{
-    const [ characterName, setCharacterName ] = useState("");
-    const [ characterData, setCharacterData ] = useState(null);
-    const [ comicData, setComicData ] = useState(null);
-    const [ comicDetails, setComicDetails ] = useState(null); // TEST CODE
-    const [ comicId, setComicId ] = useState(null);
-    const [ comicSelection, setComicSelection ] = useState(null);
+export default function Search() {
+    const [characterName, setCharacterName] = useState("");
+    const [characterData, setCharacterData] = useState(null);
+    const [comicData, setComicData] = useState(null);
+    const [comicDetails, setComicDetails] = useState(null);
+    const [comicId, setComicId] = useState(null);
+    const [comicSelection, setComicSelection] = useState(null);
 
-    const [ title, setTitle ] = useState('');
-    const [ description, setDescription ] = useState('');
-    const [ photoUrl, setPhotoUrl ] = useState('');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [photoUrl, setPhotoUrl] = useState('');
 
     const publicKey: string = import.meta.env.VITE_PUBLIC_KEY;
     const privateKey: string = import.meta.env.VITE_PRIVATE_KEY;
@@ -31,25 +30,26 @@ export default function Search()
         setCharacterData(null);
         setComicData(null);
 
-        const timeStamp= new Date().getTime();
+        const timeStamp = new Date().getTime();
         const hash: string = generateHash(timeStamp);
         const url = `https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&hash=${hash}&ts=${timeStamp}&nameStartsWith=${characterName}&limit=100`
-    
+
         fetch(url).then(response => response.json()).then(
             result => {
                 setCharacterData(result.data);
-            }).catch((error) => {console.log("There was an error: ", error)
+            }).catch((error) => {
+                console.log("There was an error: ", error)
             });
     }
 
     const getComicData = (characterId: number) => {
-        window.scrollTo({ top:0, left: 0});
+        window.scrollTo({ top: 0, left: 0 });
 
-        const timeStamp= new Date().getTime();
+        const timeStamp = new Date().getTime();
         const hash: string = generateHash(timeStamp);
 
         const url = `https://gateway.marvel.com:443/v1/public/characters/${characterId}/comics?apikey=${publicKey}&hash=${hash}&ts=${timeStamp}`
-    
+
         fetch(url).then(response => response.json()).then((results) => {
             setComicData(results.data);
         }).catch(error => {
@@ -58,9 +58,9 @@ export default function Search()
     }
 
     const getComicSelection = (comicId: number) => {
-        window.scrollTo({ top:0, left: 0});
+        window.scrollTo({ top: 0, left: 0 });
 
-        const timeStamp= new Date().getTime();
+        const timeStamp = new Date().getTime();
         const hash: string = generateHash(timeStamp);
 
         const url = `https://gateway.marvel.com:443/v1/public/comics/${comicId}?apikey=${publicKey}&hash=${hash}&ts=${timeStamp}`
@@ -75,7 +75,6 @@ export default function Search()
             console.log(`comics selection: ${comicSelection}`)
             console.log(`title ${title}`)
             console.log(photoUrl)
-            // console.log(`comics selection data: ${results.data.title}`)
         }).catch(error => {
             console.log("Error while fetching comic details", error)
         })
@@ -86,14 +85,14 @@ export default function Search()
         return md5(timeStamp + privateKey + publicKey);
     }
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => { 
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCharacterName(event.target.value);
     }
 
     const handleReset = () => {
         setCharacterData(null);
         setComicData(null);
-        setCharacterName(''); 
+        setCharacterName('');
         setComicSelection(null);
     }
 
@@ -106,7 +105,7 @@ export default function Search()
             <form className="search mb-3" onSubmit={handleSubmit}>
                 <div className="input-group search-container">
                     <input className="form-control" type="search"
-                    placeholder="Enter Character Name" onChange={handleChange}/>
+                        placeholder="Enter Character Name" onChange={handleChange} />
                     <button className="btn btn-info" type="submit">Search</button>
                 </div>
                 <div className="container reset-container">
@@ -130,5 +129,5 @@ export default function Search()
         </div>
     )
 
-    
+
 }
